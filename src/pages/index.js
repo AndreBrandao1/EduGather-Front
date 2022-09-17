@@ -5,6 +5,8 @@ import { useAuth } from "@/hooks/auth";
 import { CourseCard } from "@/components/CourseCard";
 import axios from "axios";
 import { useState, UseEffect, useEffect } from "react";
+import { Button } from "@/components/Layouts/Button";
+import { Stats } from "@/components/Stats";
 
 export default function Home() {
   const { user } = useAuth({ middleware: "guest" });
@@ -37,6 +39,14 @@ export default function Home() {
           />
         );
       })}
+      <Button
+        btn_txt="Details"
+        bk_color="linear-gradient(49deg, rgba(16,178,163,1) 1%, rgba(162,11,232,1) 84%)"
+        color="white"
+      />
+
+      <br></br>
+      <Stats first_field="Followers" second_field="20000k" first_color='white' second_color='grey' />
     </>
   );
 }
