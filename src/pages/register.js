@@ -1,127 +1,168 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
-import AuthCard from '@/components/AuthCard'
-import Button from '@/components/Button'
-import GuestLayout from '@/components/Layouts/GuestLayout'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
-import Label from '@/components/Label'
-import Link from 'next/link'
-import { useAuth } from '@/hooks/auth'
-import { useState } from 'react'
+import ApplicationLogo from "@/components/ApplicationLogo";
+import AuthCard from "@/components/AuthCard";
+import Button from "@/components/Button";
+import GuestLayout from "@/components/Layouts/GuestLayout";
+import Input from "@/components/Input";
+import InputError from "@/components/InputError";
+import Label from "@/components/Label";
+import Link from "next/link";
+import { useAuth } from "@/hooks/auth";
+import { useState } from "react";
 
 const Register = () => {
-    const { register } = useAuth({
-        middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
-    })
+  const { register } = useAuth({
+    middleware: "guest",
+    redirectIfAuthenticated: "/dashboard",
+  });
 
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirmation, setPasswordConfirmation] = useState('')
-    const [errors, setErrors] = useState([])
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [role, setRole] = useState("");
+  const [errors, setErrors] = useState([]);
 
-    const submitForm = event => {
-        event.preventDefault()
+  const submitForm = (event) => {
+    event.preventDefault();
 
-        register({ name, email, password, password_confirmation: passwordConfirmation, setErrors })
-    }
+    register({
+      last_name,
+      first_name,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+      role,
+      setErrors,
+    });
 
-    return (
-        <GuestLayout>
-            <AuthCard
-                logo={
-                    <Link href="/">
-                        <a>
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </a>
-                    </Link>
-                }>
+    console.log(role);
+  };
 
-                <form onSubmit={submitForm}>
-                    {/* Name */}
-                    <div>
-                        <Label htmlFor="name">Name</Label>
+  return (
+    <GuestLayout>
+      <AuthCard
+        logo={
+          <Link href="/">
+            <a>
+              <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+            </a>
+          </Link>
+        }
+      >
+        <form onSubmit={submitForm}>
+          {/* Name */}
+          <div>
+            <Label htmlFor="first_name">First name</Label>
 
-                        <Input
-                            id="name"
-                            type="text"
-                            value={name}
-                            className="block mt-1 w-full"
-                            onChange={event => setName(event.target.value)}
-                            required
-                            autoFocus
-                        />
+            <Input
+              id="first_name"
+              type="text"
+              value={first_name}
+              className="block mt-1 w-full"
+              onChange={(event) => setFirstName(event.target.value)}
+              required
+              autoFocus
+            />
 
-                        <InputError messages={errors.name} className="mt-2" />
-                    </div>
+            <InputError messages={errors.first_name} className="mt-2" />
+          </div>
 
-                    {/* Email Address */}
-                    <div className="mt-4">
-                        <Label htmlFor="email">Email</Label>
+          <div>
+            <Label htmlFor="last_name">Last name</Label>
 
-                        <Input
-                            id="email"
-                            type="email"
-                            value={email}
-                            className="block mt-1 w-full"
-                            onChange={event => setEmail(event.target.value)}
-                            required
-                        />
+            <Input
+              id="last_name"
+              type="text"
+              value={last_name}
+              className="block mt-1 w-full"
+              onChange={(event) => setLastName(event.target.value)}
+              required
+              autoFocus
+            />
 
-                        <InputError messages={errors.email} className="mt-2" />
-                    </div>
+            <InputError messages={errors.last_name} className="mt-2" />
+          </div>
 
-                    {/* Password */}
-                    <div className="mt-4">
-                        <Label htmlFor="password">Password</Label>
+          {/* Email Address */}
+          <div className="mt-4">
+            <Label htmlFor="email">Email</Label>
 
-                        <Input
-                            id="password"
-                            type="password"
-                            value={password}
-                            className="block mt-1 w-full"
-                            onChange={event => setPassword(event.target.value)}
-                            required
-                            autoComplete="new-password"
-                        />
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              className="block mt-1 w-full"
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
 
-                        <InputError messages={errors.password} className="mt-2" />
-                    </div>
+            <InputError messages={errors.email} className="mt-2" />
+          </div>
 
-                    {/* Confirm Password */}
-                    <div className="mt-4">
-                        <Label htmlFor="passwordConfirmation">
-                            Confirm Password
-                        </Label>
+          {/* Password */}
+          <div className="mt-4">
+            <Label htmlFor="password">Password</Label>
 
-                        <Input
-                            id="passwordConfirmation"
-                            type="password"
-                            value={passwordConfirmation}
-                            className="block mt-1 w-full"
-                            onChange={event =>
-                                setPasswordConfirmation(event.target.value)
-                            }
-                            required
-                        />
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              className="block mt-1 w-full"
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              autoComplete="new-password"
+            />
 
-                        <InputError messages={errors.password_confirmation} className="mt-2" />
-                    </div>
+            <InputError messages={errors.password} className="mt-2" />
+          </div>
 
-                    <div className="flex items-center justify-end mt-4">
-                        <Link href="/login">
-                            <a className="underline text-sm text-gray-600 hover:text-gray-900">
-                                Already registered?
-                            </a>
-                        </Link>
+          {/* Confirm Password */}
+          <div className="mt-4">
+            <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-                        <Button className="ml-4">Register</Button>
-                    </div>
-                </form>
-            </AuthCard>
-        </GuestLayout>
-    )
-}
+            <Input
+              id="passwordConfirmation"
+              type="password"
+              value={passwordConfirmation}
+              className="block mt-1 w-full"
+              onChange={(event) => setPasswordConfirmation(event.target.value)}
+              required
+            />
 
-export default Register
+            <InputError
+              messages={errors.password_confirmation}
+              className="mt-2"
+            />
+          </div>
+
+          <div className="mt-4">
+            <Label htmlFor="role">Tell us your role:</Label>
+            <select
+              name="role"
+              id="role"
+              onChange={(event) => setRole(event.target.value)}
+              // onChange={(event) => console.log(event.target.value)}
+              required
+            >
+              <option value="trainee">Trainee</option>
+              <option value="trainer">Trainer</option>
+            </select>
+          </div>
+
+          <div className="flex items-center justify-end mt-4">
+            <Link href="/login">
+              <a className="underline text-sm text-gray-600 hover:text-gray-900">
+                Already registered?
+              </a>
+            </Link>
+
+            <Button className="ml-4">Register</Button>
+          </div>
+        </form>
+      </AuthCard>
+    </GuestLayout>
+  );
+};
+
+export default Register;

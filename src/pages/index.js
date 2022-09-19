@@ -46,7 +46,12 @@ export default function Home() {
       />
 
       <br></br>
-      <Stats first_field="Followers" second_field="20000k" first_color='white' second_color='grey' />
+      <Stats
+        first_field="Followers"
+        second_field="20000k"
+        first_color="white"
+        second_color="grey"
+      />
     </>
   );
 }
