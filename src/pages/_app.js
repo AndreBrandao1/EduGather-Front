@@ -1,5 +1,6 @@
 import "tailwindcss/tailwind.css";
 import Head from "next/head";
+import { GrLocation } from "react-icons/fa";
 
 const App = ({ Component, pageProps }) => (
   <>
@@ -11,7 +12,7 @@ const App = ({ Component, pageProps }) => (
         rel="stylesheet"
       />
     </Head>
-    <Component {...pageProps} />;
+    <Component {...pageProps} />
     <style jsx>
       {`
         * {

@@ -17,23 +17,22 @@ export function Stats({
           .stat_container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
             justify-content: center;
-            border: 1px solid black;
             padding: 10px;
           }
           .first_field {
             font-family: "Roboto", sans-serif;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 600;
             background-color: transparent;
             color: ${first_color};
           }
 
           .second_field {
             font-family: "Roboto", sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             background-color: transparent;
             color: ${second_color};
             opacity: 0.9;
