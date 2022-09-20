@@ -13,7 +13,7 @@ export default function Home() {
   const [courses, setCourse] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/search")
+      .get("http://localhost:8000/api/courses")
       .then(function (response) {
         // handle success
         setCourse(response.data);
@@ -27,13 +27,19 @@ export default function Home() {
   return (
     <>
       {courses.map(function (c) {
+        const tagTitle = c.tags.map((tag) => {
+          {
+            return <p>{tag.tag_title}</p>;
+          }
+        });
+        console.log(tagTitle);
         return (
           <CourseCard
             trainer_img={c.cou_logo}
-            trainer_name="Jack"
+            trainer_name={`${c.first_name} ${c.last_name}`}
             course_title={c.cou_title}
-            course_category="IT"
-            course_tags="HTML"
+            course_category={c.cat_title}
+            course_tags={tagTitle}
             course_desc={c.cou_description}
             key={c.id}
           />

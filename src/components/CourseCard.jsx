@@ -19,7 +19,7 @@ export function CourseCard({
           <h2 id="trainer_name">{course_title}</h2>
           <p>{course_category}</p>
           <div className="course_tags">
-            <p>{course_tags}</p>
+            <div>{course_tags}</div>
           </div>
           <div className="course_desc">
             <p>{course_desc}</p>
@@ -36,7 +36,7 @@ export function CourseCard({
           /* Trainer Info*/
 
           .course_container {
-            width: 700px;
+            width: 800px;
             height: 350px;
             display: flex;
             border: 1px solid black;
