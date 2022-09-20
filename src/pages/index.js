@@ -13,7 +13,7 @@ export default function Home() {
   const [courses, setCourse] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/courses")
+      .get("http://localhost:8000/api/courses/2")
       .then(function (response) {
         // handle success
         setCourse(response.data);

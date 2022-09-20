@@ -1,4 +1,6 @@
 import React from "react";
+import { Button } from "./Layouts/Button";
+import { ButtonTest } from "@/../public/styles/styledComponents";
 
 export function CourseCard({
   trainer_img,
@@ -17,22 +19,25 @@ export function CourseCard({
         </div>
         <div className="course_info">
           <h2 id="trainer_name">{course_title}</h2>
-          <p>{course_category}</p>
+          <h2>{course_category}</h2>
           <div className="course_tags">
-            <div>{course_tags}</div>
+            <div className="tags">{course_tags}</div>
           </div>
           <div className="course_desc">
             <p>{course_desc}</p>
           </div>
           <div className="course_btn">
-            <a>Details</a>
-            <a>Favorite</a>
+            <ButtonTest>Details</ButtonTest>
+            <ButtonTest>Fav</ButtonTest>
           </div>
         </div>
       </div>
 
       <style jsx>
         {`
+          h2 {
+            font-weight: bold;
+          }
           /* Trainer Info*/
 
           .course_container {
@@ -72,7 +77,16 @@ export function CourseCard({
             justify-content: space-evenly;
             align-items: center;
           }
+          .tags {
+            display: flex;
+            gap: 15px;
+            color: grey;
+          }
 
+          .course_btn {
+            display: flex;
+            gap: 10px;
+          }
           #trainer_name {
           }
         `}
