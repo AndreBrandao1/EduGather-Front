@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/courseDetails": [
+    "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/courseDetails.js"
-    ],
-    "/trainerProfile": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/trainerProfile.js"
+      "static/chunks/pages/login.js"
     ]
   },
   "ampFirstPages": []

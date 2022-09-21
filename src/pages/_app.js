@@ -1,6 +1,7 @@
 import "tailwindcss/tailwind.css";
 import Head from "next/head";
 import { GrLocation } from "react-icons/fa";
+import { SideBar } from "@/components/SideBar";
 
 const App = ({ Component, pageProps }) => (
   <>
@@ -12,11 +13,21 @@ const App = ({ Component, pageProps }) => (
         rel="stylesheet"
       />
     </Head>
+
+    <SideBar />
+
     <Component {...pageProps} />
     <style jsx>
       {`
         * {
           font-family: "Roboto", sans-serif;
+        }
+
+        nav {
+          height: 80px;
+          background-color: black;
+          color: white;
+          font-size: 40px;
         }
       `}
     </style>

@@ -11,6 +11,11 @@ import { SmallCourseCard } from "@/components/SmallCourseCard";
 export default function trainerProfile() {
   const [course, setCourse] = useState([]);
 
+ 
+
+  setTimeout(() => console.log("1"));
+  console.log("2");
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/trainer/2")
@@ -95,7 +100,7 @@ export default function trainerProfile() {
                     <SmallCourseCard
                       title={course.cou_title}
                       btn_value="Details"
-                      route="/courseDetails"
+                      route={`courseDetails/${course.id}`}
                     />
                   );
                 })}

@@ -9,6 +9,7 @@ import Input from "@/components/Input";
 import InputError from "@/components/InputError";
 import Label from "@/components/Label";
 import { SlideShow } from "@/components/SlideShow";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export default function insertCourse() {
   const { user } = useAuth({ middleware: "auth" });
@@ -37,7 +38,7 @@ export default function insertCourse() {
     axios({
       method: "post",
       url: "http://localhost:8000/api/insert_course",
-      data: course_form,
+      data: course_form, 
     })
       .then(function (response) {
         console.log(response);
@@ -52,59 +53,15 @@ export default function insertCourse() {
         <div className="image"></div>
 
         <div className="form_container">
+          <h1>Insert Course</h1>
           <form onSubmit={addCourse} method="post">
-
-
-            {/* Course title */}
-            <div>
-              <Label htmlFor="cou_title">Title</Label>
-
-              <Input
-                name="cou_title"
-                id="cou_title"
-                type="text"
-                className="block mt-1 w-full"
-                required
-                autoFocus
-              />
-
-              <InputError messages={errors.cou_title} className="mt-2" />
+            <div className="form_input">
+              <label for="title">Title:</label>
+              <input id="title" name="cou_title" type="text"></input>
             </div>
 
-            {/* Course description */}
-            <div>
-              <Label htmlFor="cou_description">Description</Label>
-
-              <Input
-                name="cou_description"
-                id="cou_description"
-                type="text"
-                className="block mt-1 w-full"
-                required
-                autoFocus
-              />
-
-              <InputError messages={errors.cou_logo} className="mt-2" />
-            </div>
-
-            {/* Password */}
-            <div>
-              <Label htmlFor="cou_logo">Logo</Label>
-
-              <Input
-                name="cou_logo"
-                id="cou_logo"
-                type="text"
-                className="block mt-1 w-full"
-                required
-                autoFocus
-              />
-
-              <InputError messages={errors.cou_logo} className="mt-2" />
-            </div>
-
-            <div>
-              <Label htmlFor="cou_cat">Category:</Label>
+            <div className="form_input">
+              <label for="cat_id">Category:</label>
               <select
                 name="cat_id"
                 id="cat_id"
@@ -130,13 +87,21 @@ export default function insertCourse() {
                   return <option value={c.id}>{c.cat_title}</option>;
                 })}
               </select>
-
-              <InputError messages={errors.cou_title} className="mt-2" />
             </div>
 
-            {/* Course Tags */}
             <div>
-              <Label htmlFor="cou_tags">
+              <Label
+                htmlFor="cou_tags"
+                // style={
+                //   tags.length !=1
+                //     ? {
+                //         display: "block",
+                //       }
+                //     : {
+                //         display: "none",
+                //       }
+                // }
+              >
                 Tag the topics that you will abord in this course:
               </Label>
 
@@ -147,51 +112,103 @@ export default function insertCourse() {
                     <input
                       type="checkbox"
                       id={tag.id}
-                      name={tag.tag_title}
+                      name="tags"
                       value={tag.tag_title}
                     />
-                    <label for={tag.id}>{tag.tag_title}</label>
+                    <label className="tagName" for={tag.id}>
+                      {tag.tag_title}
+                    </label>
                   </>
                 );
               })}
-
-              <InputError messages={errors.cou_tags} className="mt-2" />
             </div>
 
-            <button type="submit">Create</button>
+            <div className="form_input">
+              <label for="des">Description:</label>
+              <input id="desc" name="cou_description" type="text"></input>
+            </div>
+
+            {/* <div className="form_input">
+              <label for="logo">Logo:</label>
+              <label className="course_logo">
+              <input id="logo" size="60" wname="cou_logo" type="file"></input>
+              </label>
+            </div> */}
+
+            <button>Create</button>
           </form>
         </div>
       </div>
 
       <style jsx>
         {`
+          button {
+            background-color: purple;
+            border-radius: 20px;
+            color: white;
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px 15px 10px 15px;
+          }
+
           .container {
             width: 100vw;
             height: 100vh;
             display: flex;
-            padding: 150px;
-            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+          }
+
+          form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
           }
 
           .form_container {
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            padding: 100px;
-            border: 1px solid black;
+            gap: 20px;
+            width: 80%;
           }
 
-          .image {
+           {
+            /* each div containing the different inputs */
+          }
+          .form_input {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+          }
+
+          input[type="text"] {
+            border-radius: 20px;
+          }
+          input[type="file"] {
+          }
+
+          input[type="checkbox"]:checked {
+            background-color: purple;
+          }
+          h1 {
+            font-weight: bold;
+            font-size: 30px;
+          }
+          select {
+            border-radius: 20px;
+          }
+
+          .tagName {
+            padding: 5px;
+          }
+           {
+            /* .image {
             width: 100%;
             background-color: purple;
             flex: 0 0 40%;
-          }
-
-          button {
-            background-color: purple;
-            color: white;
-            padding: 10px 25px 10px 25px;
-            border-radius: 15px;
-            font-size: 18px;
-            margin-top: 20px;
+          } */
           }
         `}
       </style>
