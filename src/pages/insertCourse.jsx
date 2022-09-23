@@ -13,6 +13,8 @@ import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export default function insertCourse() {
   const { user } = useAuth({ middleware: "auth" });
+  const userId = [user?.id];
+  console.log(userId);
   const [errors, setErrors] = useState([]);
   const [category, setCategory] = useState([
     {
@@ -88,6 +90,7 @@ export default function insertCourse() {
     const course_form = new FormData(e.target);
 
     course_form.append("tags", checkBox);
+    course_form.append("user_id", userId);
 
     axios({
       method: "post",
