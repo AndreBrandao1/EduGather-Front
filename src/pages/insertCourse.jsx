@@ -31,6 +31,8 @@ export default function insertCourse() {
       });
   }, []);
 
+  console.log(category);
+
   function addCourse(e) {
     e.preventDefault();
     const course_form = new FormData(e.target);
@@ -38,7 +40,7 @@ export default function insertCourse() {
     axios({
       method: "post",
       url: "http://localhost:8000/api/insert_course",
-      data: course_form, 
+      data: course_form,
     })
       .then(function (response) {
         console.log(response);
@@ -46,6 +48,20 @@ export default function insertCourse() {
       .catch(function (error) {
         console.log(error);
       });
+
+    console.log(category);
+    function selectAll() {
+      // selecting all checkboxes
+      // of group language
+      var checkboxes = document.getElementsByName("tags");
+      var values = [];
+      // looping through all checkboxes
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = true;
+        values.push(checkboxes[i].value);
+      }
+      console.log(values);
+    }
   }
   return (
     <>
@@ -62,27 +78,7 @@ export default function insertCourse() {
 
             <div className="form_input">
               <label for="cat_id">Category:</label>
-              <select
-                name="cat_id"
-                id="cat_id"
-                onChange={function (e) {
-                  axios
-                    .get(
-                      `http://localhost:8000/api/categories/${e.target.value}`
-                    )
-                    .then(function (response) {
-                      // handle success
-                      setTags(response.data);
-                    })
-                    .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                    });
-
-                  console.log(tags);
-                }}
-                required
-              >
+              <select name="cat_id" id="cat_id">
                 {category.map(function (c) {
                   return <option value={c.id}>{c.cat_title}</option>;
                 })}

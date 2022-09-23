@@ -6,20 +6,30 @@ import { Collapsable } from "@/components/Collapsable";
 import { SmallCourseCard } from "@/components/SmallCourseCard";
 import { Comment } from "@/components/Comment";
 import axios from "@/lib/axios";
+import { Title } from "@/../public/styles/styledComponents";
+import { Square } from "@/components/Square";
 
 export default function courseDetails() {
   const [course, setCourse] = useState([]);
+  const [user, setUser] = useState([]);
+  const [categ, setCateg] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [lang, setLang] = useState([]);
 
   setTimeout(() => console.log("1"));
   console.log("2");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/courses/2")
+      .get("http://localhost:8000/api/course/1")
       .then(function (response) {
         // handle success
         console.log(response.data);
-        setCourse(response.data);
+        setCourse(response.data.course);
+        setUser(response.data.user);
+        setCateg(response.data.category);
+        setTags(response.data.tags);
+        setLang(response.data.languages);
       })
       .catch(function (error) {
         // handle error
@@ -37,84 +47,53 @@ export default function courseDetails() {
 
         {/* Start Content */}
         <div className="content">
-          {/* Start User Info */}
-          <div className="userInfo">
-            <div className="userPic">
-              <Image
-                style={{ border: "2px solid black" }}
-                src="/assets/userpic.png"
-                width={100}
-                height={100}
-              />
-            </div>
-            <h2>STATIC</h2>
-            <div
-              className="
-            location"
-            >
-              <p>📍</p>
-              <p>Ettelbruck,Luxembourg</p>
-            </div>
-
-            {/* Start user Stats */}
-            <div className="userStats">
-              <Stats
-                first_field="Students"
-                second_field="68"
-                first_color="grey"
-                second_color="black"
-              />
-              <div className="division"></div>
-              <Stats
-                first_field="Courses"
-                second_field="50"
-                first_color="grey"
-                second_color="black"
-              />
-              <div className="division"></div>
-              <Stats
-                first_field="Comments"
-                second_field="25"
-                first_color="grey"
-                second_color="black"
-              />
-            </div>
-
-            {/* Start user Courses */}
-            <div className="userCourses">
-              {/* Start user description */}
-              <Collapsable label="Description">
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Blanditiis asperiores corrupti modi praesentium sunt.
-                  Repudiandae, nemo autem. Ullam, impedit excepturi. Laborum,
-                  ratione saepe magnam nisi in nam error quis voluptates!
-                </p>
-              </Collapsable>
-              <Collapsable label="Courses">
-                {course.map((course) => {
-                  return (
-                    <SmallCourseCard
-                      title={course.cou_title}
-                      btn_value="Details"
-                      route={`courseDetails/${course.id}`}
-                    />
-                  );
-                })}
-                <SmallCourseCard
-                  title="Course 10"
-                  btn_value="Details"
-                  route="/courseDetails"
-                />
-              </Collapsable>
-            </div>
+          <div className="courseDescription">
+            <h1>Description</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
+              quis animi unde dolores temporibus vel at! Cum magni sit ea hic,
+              esse dolor blanditiis eligendi maxime neque quasi, explicabo
+              veritatis!
+            </p>
           </div>
-          <div className="comments">
-            <h2>Reviews</h2>
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+          <div className="courseDetails">
+            <Square
+              src="/assets/icons/topicIcon.png"
+              title="Topics"
+              font_weight="bold"
+            >
+              {tags.map((tag) => {
+                return (
+                  <div className="tagInfo">
+                    <img src={tag.tag_logo} />
+                    <p>{tag.tag_title}</p>
+                  </div>
+                );
+              })}
+            </Square>
+            <Square
+              src="/assets/icons/languagesIcon.png"
+              title="Languages"
+              font_weight="bold"
+              title_color="#00ff80"
+            >
+              {lang.map((lang) => {
+                return (
+                  <div className="tagInfo">
+                    <p>{lang.lan_logo}</p>
+                    <p>{lang.lan_title}</p>
+                  </div>
+                );
+              })}
+            </Square>
+            <Square
+              src="/assets/icons/languagesIcon.png"
+              title="Pricing"
+              font_weight="bold"
+              title_color="#00ff80"
+            >
+              <p>25€/H</p>
+            </Square>
           </div>
         </div>
       </div>
@@ -122,14 +101,33 @@ export default function courseDetails() {
       {/* Css */}
       <style jsx>{`
         .container {
-          width: 100vw;
           height: 100vh;
           display: flex;
+          width: 100vw;
           flex-direction: column;
           position: relative;
         }
 
+        .comments {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .courseDetails {
+          height: 100%;
+          width: 60%;
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        .courseDescription {
+          padding: 40px 20px;
+        }
+
         .content {
+          align-items: center;
           background-color: white;
           border-top-right-radius: 55px;
           border-top-left-radius: 55px;
@@ -142,12 +140,11 @@ export default function courseDetails() {
           gap: 50px;
         }
 
-        .comments {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
+        h1 {
+          font-family: "Inter", sans-serif;
+          font-size: 30px;
+          font-weight: bold;
         }
-
         .hero {
           align-items: center;
           background-color: purple;
@@ -171,46 +168,27 @@ export default function courseDetails() {
           font-weight: bold;
         }
 
-        .location {
+        .tagInfo {
           display: flex;
-        }
-        .userCourses {
-          display: flex;
-          flex-direction: column;
-          gap: 55px;
-          width: 100%;
-        }
-
-        .userCourses h2 {
-        }
-
-        .userInfo {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 15px;
-        }
-
-        .userInfo h2 {
-          font-weight: 600;
-        }
-        .userPic {
-          border: 2px solid purple;
-          border-radius: 50%;
-          height: 100px;
-          width: 100px;
-        }
-
-        .userStats {
-          display: flex;
-          gap: 10px;
           align-items: center;
         }
 
-        .division {
-          width: 1px;
-          height: 40%;
-          background-color: rgb(220, 220, 220);
+        .tagInfo img {
+          height: 25px;
+        }
+        .tagLogo {
+          width: 15px;
+        }
+
+        @media screen and (min-width: 768px) {
+          .content {
+            flex-direction: row;
+            flex: 0 0 60%;
+          }
+
+          .hero {
+            flex: 0 0 40%;
+          }
         }
       `}</style>
     </>
