@@ -10,20 +10,19 @@ import { TraineeDashboard } from "@/components/TraineeDashboard";
 
 const DashboardIndex = () => {
   const { user } = useAuth({ middleware: "auth" });
-
   return (
     <>
-      {user.role === "trainer" && (
+      {user?.role == "trainer" && (
         <Dashboard>
-          <TraineeDashboard/>
+          <TraineeDashboard />
         </Dashboard>
       )}
-      {user.role === "admin" && (
+      {user?.role === "admin" && (
         <Dashboard>
           <NavDashboard></NavDashboard>
         </Dashboard>
       )}
-      {user.role === "trainee" && (
+      {user?.role === "trainee" && (
         <Dashboard>
           <NavDashboard></NavDashboard>
         </Dashboard>

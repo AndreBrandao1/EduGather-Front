@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 
 function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <>
       <div className="navcontainer">
@@ -54,7 +54,15 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                 style={{ width: "18px", cursor: "pointer" }}
               />{" "}
               <div className="link">
-                <Link href="/dashboard/students">Students</Link>
+                {user?.role == "trainer" && (
+                  <Link href="/dashboard/students">Students</Link>
+                )}
+                {user?.role == "trainee" && (
+                  <Link href="/dashboard/students">Contacts</Link>
+                )}
+                {user?.role == "admin" && (
+                  <Link href="/dashboard/students">Manage Trainers</Link>
+                )}
               </div>
             </li>
             <li>

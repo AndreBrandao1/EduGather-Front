@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Typical from "react-typical";
 import { useState, useEffect } from "react";
 import ReactTyped from "react-typed";
 
