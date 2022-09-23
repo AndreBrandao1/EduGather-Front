@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useAuth } from "@/hooks/auth";
 import axios from "axios";
-import { useState, UseEffect, useEffect } from "react";
+import { useState, UseEffect, useEffect, useRef } from "react";
 import { Button } from "@/components/Layouts/Button";
 import Input from "@/components/Input";
 import InputError from "@/components/InputError";
@@ -14,8 +14,47 @@ import { NodeNextRequest } from "next/dist/server/base-http/node";
 export default function insertCourse() {
   const { user } = useAuth({ middleware: "auth" });
   const [errors, setErrors] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [category, setCategory] = useState([
+    {
+      cat_id: 1,
+      cat_title: "Development",
+      cat_description: "",
+      cat_logo: "",
+      tags: [
+        {
+          tag_id: 1,
+          tag_title: "Web Development",
+        },
+        {
+          tag_id: 2,
+          tag_title: "Data Scince",
+        },
+        {
+          tag_id: 3,
+          tag_title: "Mobile Development",
+        },
+      ],
+    },
+  ]);
+  const [tags, setTags] = useState([
+    {
+      tag_id: 1,
+      tag_title: "Web Development",
+    },
+    {
+      tag_id: 2,
+      tag_title: "Data Scince",
+    },
+    {
+      tag_id: 3,
+      tag_title: "Mobile Development",
+    },
+  ]);
+
+  const [catId, setCatId] = useState(1);
+  const checkBox = [];
+
+  const ref = useRef();
 
   useEffect(() => {
     //fetching all categories to to be displayed in the <select>
@@ -31,38 +70,49 @@ export default function insertCourse() {
       });
   }, []);
 
-  console.log(category);
+  useEffect(() => {
+    // const tagArray = category.find((cat) => {
+    //   return (cat.cat_id = catId);
+    // });
+
+    category.forEach((cat) => {
+      if (cat.cat_id == catId) {
+        setTags(cat.tags);
+        console.log(cat.tags);
+      }
+    });
+  }, [catId]);
 
   function addCourse(e) {
     e.preventDefault();
     const course_form = new FormData(e.target);
-    console.log(course_form);
+
+    course_form.append("tags", checkBox);
+
     axios({
       method: "post",
       url: "http://localhost:8000/api/insert_course",
       data: course_form,
     })
-      .then(function (response) {
-        console.log(response);
-      })
+      .then(function (response) {})
       .catch(function (error) {
         console.log(error);
       });
 
-    console.log(category);
     function selectAll() {
       // selecting all checkboxes
       // of group language
       var checkboxes = document.getElementsByName("tags");
       var values = [];
+
       // looping through all checkboxes
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
         values.push(checkboxes[i].value);
       }
-      console.log(values);
     }
   }
+
   return (
     <>
       <div className="container">
@@ -78,26 +128,22 @@ export default function insertCourse() {
 
             <div className="form_input">
               <label for="cat_id">Category:</label>
-              <select name="cat_id" id="cat_id">
+              <select
+                name="cat_id"
+                id="cat_id"
+                onChange={(e) => {
+                  setCatId(e.target.value);
+                  checkBox.length = 0;
+                }}
+              >
                 {category.map(function (c) {
-                  return <option value={c.id}>{c.cat_title}</option>;
+                  return <option value={c.cat_id}>{c.cat_title}</option>;
                 })}
               </select>
             </div>
 
             <div>
-              <Label
-                htmlFor="cou_tags"
-                // style={
-                //   tags.length !=1
-                //     ? {
-                //         display: "block",
-                //       }
-                //     : {
-                //         display: "none",
-                //       }
-                // }
-              >
+              <Label htmlFor="cou_tags">
                 Tag the topics that you will abord in this course:
               </Label>
 
@@ -106,10 +152,18 @@ export default function insertCourse() {
                 return (
                   <>
                     <input
+                      ref={ref}
                       type="checkbox"
-                      id={tag.id}
-                      name="tags"
-                      value={tag.tag_title}
+                      id={tag.tag_id}
+                      name="tag"
+                      value={tag.tag_id}
+                      onClick={(e) => {
+                        if (e.target.checked) {
+                          const check = e.target.value;
+                          checkBox.push(check);
+                          console.log(checkBox);
+                        }
+                      }}
                     />
                     <label className="tagName" for={tag.id}>
                       {tag.tag_title}
@@ -121,7 +175,7 @@ export default function insertCourse() {
 
             <div className="form_input">
               <label for="des">Description:</label>
-              <input id="desc" name="cou_description" type="text"></input>
+              <input id="desc" name="cou_description" type="textarea"></input>
             </div>
 
             {/* <div className="form_input">
