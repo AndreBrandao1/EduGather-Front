@@ -12,7 +12,6 @@ export function Toggle({
 }) {
   return (
     <>
-    
       <p>{text}</p>
 
       <input type="radio" id={id_1} name={name} value={value_1} />

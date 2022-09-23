@@ -21,7 +21,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState([]);
   const [errors, setErrors] = useState([]);
 
   const submitForm = (event) => {
@@ -55,20 +55,31 @@ const Register = () => {
           <form onSubmit={submitForm}>
             {/* Role */}
             <div className="mt-4 role_container">
-              <Toggle
-                text="Select your role:"
-                name="role"
-                id_1="trainer"
-                id_2="trainee"
-                value_1="trainer"
-                value_2="trainee"
-                msg_1="Trainer"
-                msg_2="Trainee"
-                onChange={function (e) {
-                  setRole(e.target.value);
-                  console.log(role);
+              <p>Select your Role:</p>
+
+              <input
+                onClick={(e) => {
+                  const trainer = e.target.value;
+                  setRole(trainer);
                 }}
+                type="radio"
+                id="trainer"
+                name="role"
+                value="trainer"
               />
+              <label for="trainer">Trainer</label>
+
+              <input
+                onClick={(e) => {
+                  const trainee = e.target.value;
+                  setRole(trainee);
+                }}
+                type="radio"
+                id="trainee"
+                name="role"
+                value="trainee"
+              />
+              <label for="trainee">Trainee</label>
             </div>
 
             {/* Name */}
@@ -202,6 +213,26 @@ const Register = () => {
             display: flex;
             justify-content: center;
             align-items: center;
+          }
+
+           {
+            /* toggle */
+          }
+          .role_container label {
+            display: inline-block;
+            width: 100px;
+            padding: 10px;
+            border: solid 2px #ccc;
+            transition: all 0.3s;
+            cursor: pointer;
+          }
+
+          .role_container input[type="radio"] {
+            display: none;
+          }
+
+          .role_container input[type="radio"]:checked + label {
+            border: solid 2px purple;
           }
         `}
       </style>

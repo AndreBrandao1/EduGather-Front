@@ -3,18 +3,18 @@ import Link from "next/link";
 
 import { useAuth } from "@/hooks/auth";
 import axios from "axios";
-import { useState, UseEffect, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/Layouts/Button";
 import Input from "@/components/Input";
 import InputError from "@/components/InputError";
 import Label from "@/components/Label";
 import { SlideShow } from "@/components/SlideShow";
 import { NodeNextRequest } from "next/dist/server/base-http/node";
+import { useRouter } from "next/router";
 
 export default function insertCourse() {
-  const { user } = useAuth({ middleware: "auth" });
+  const { user, login } = useAuth({ middleware: "auth", redirect: "/login" });
   const userId = [user?.id];
-  console.log(userId);
   const [errors, setErrors] = useState([]);
   const [category, setCategory] = useState([
     {
@@ -55,6 +55,7 @@ export default function insertCourse() {
 
   const [catId, setCatId] = useState(1);
   const checkBox = [];
+  const router = useRouter();
 
   const ref = useRef();
 
@@ -101,19 +102,6 @@ export default function insertCourse() {
       .catch(function (error) {
         console.log(error);
       });
-
-    function selectAll() {
-      // selecting all checkboxes
-      // of group language
-      var checkboxes = document.getElementsByName("tags");
-      var values = [];
-
-      // looping through all checkboxes
-      for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = true;
-        values.push(checkboxes[i].value);
-      }
-    }
   }
 
   return (
@@ -145,35 +133,38 @@ export default function insertCourse() {
               </select>
             </div>
 
-            <div>
+            <div className="tagsContainer">
               <Label htmlFor="cou_tags">
                 Tag the topics that you will abord in this course:
               </Label>
-
-              {/* Creating a checkbox for every tag found to category selected. */}
-              {tags.map(function (tag) {
-                return (
-                  <>
-                    <input
-                      ref={ref}
-                      type="checkbox"
-                      id={tag.tag_id}
-                      name="tag"
-                      value={tag.tag_id}
-                      onClick={(e) => {
-                        if (e.target.checked) {
-                          const check = e.target.value;
-                          checkBox.push(check);
-                          console.log(checkBox);
-                        }
-                      }}
-                    />
-                    <label className="tagName" for={tag.id}>
-                      {tag.tag_title}
-                    </label>
-                  </>
-                );
-              })}
+              <div className="checkBox">
+                {/* Creating a checkbox for every tag found to category selected. */}
+                {tags.map(function (tag) {
+                  return (
+                    <>
+                      <div>
+                        <input
+                          ref={ref}
+                          type="checkbox"
+                          id={tag.tag_id}
+                          name="tag"
+                          value={tag.tag_id}
+                          onClick={(e) => {
+                            if (e.target.checked) {
+                              const check = e.target.value;
+                              checkBox.push(check);
+                              console.log(checkBox);
+                            }
+                          }}
+                        />
+                        <label className="tagName" for={tag.id}>
+                          {tag.tag_title}
+                        </label>
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="form_input">
@@ -181,18 +172,10 @@ export default function insertCourse() {
               <input id="desc" name="cou_description" type="textarea"></input>
             </div>
 
-            {/* <div className="form_input">
-              <label for="logo">Logo:</label>
-              <label className="course_logo">
-              <input id="logo" size="60" wname="cou_logo" type="file"></input>
-              </label>
-            </div> */}
-
             <button>Create</button>
           </form>
         </div>
       </div>
-
       <style jsx>
         {`
           button {
@@ -211,6 +194,14 @@ export default function insertCourse() {
             flex-direction: column;
             align-items: center;
             padding-top: 100px;
+          }
+
+          .checkBox {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
           }
 
           form {
@@ -256,12 +247,14 @@ export default function insertCourse() {
           .tagName {
             padding: 5px;
           }
-           {
-            /* .image {
-            width: 100%;
-            background-color: purple;
-            flex: 0 0 40%;
-          } */
+          .tagsContainer {
+            flex-direction: column;
+          }
+
+          @media screen and (min-width: 769px) {
+            .tagsContainer {
+              flex-direction: row;
+            }
           }
         `}
       </style>
