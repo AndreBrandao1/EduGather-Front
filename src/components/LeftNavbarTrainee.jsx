@@ -9,11 +9,16 @@ import {
   faSignOutAlt,
   faTachometerAlt,
   faUser,
-  faPenToSquare,   
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
+function LeftNavbarTrainee({
+  onClick,
+  onClick2,
+  onClick3,
+  onClick4,
+  onClick5,
+}) {
   const { user, logout } = useAuth();
   return (
     <>
@@ -196,5 +201,3 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
     </>
   );
 }
-
-export default LeftNavbar;
