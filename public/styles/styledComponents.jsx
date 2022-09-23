@@ -27,3 +27,15 @@ export const RoundPic = styled.img`
   height: ${(props) => props.height || "100px"};
   width: ${(props) => props.width || "100px"};
 `;
+
+export const Title = styled.h1`
+  font-family: "Inter", sans-serif;
+  font-size: ${(props) => props.size || "30px"};
+  color: ${(props) => props.color || "black"};
+`;
+export const SmallTitle = styled.h2`
+  font-family: "Inter", sans-serif;
+  font-size: ${(props) => props.size || "15px"};
+  font-weight: "bold";
+  color: ${(props) => props.color || "black"};
+`;

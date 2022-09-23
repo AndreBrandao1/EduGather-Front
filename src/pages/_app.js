@@ -14,8 +14,6 @@ const App = ({ Component, pageProps }) => (
       />
     </Head>
 
-    <SideBar />
-
     <Component {...pageProps} />
     <style jsx>
       {`
@@ -25,9 +23,16 @@ const App = ({ Component, pageProps }) => (
 
         nav {
           height: 80px;
-          background-color: black;
+          background-color: rgba(0, 0, 0, 0);
           color: white;
           font-size: 40px;
+          position: fixed;
+          z-index: 5;
+        }
+
+        .test {
+          display: flex;
+          justify-content: flex-end;
         }
       `}
     </style>

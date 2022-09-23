@@ -7,18 +7,21 @@ import { Stats } from "@/components/Stats";
 import { Collapsable } from "@/components/Collapsable";
 import { Comment } from "@/components/Comment";
 import { SmallCourseCard } from "@/components/SmallCourseCard";
+import { useAuth } from "@/hooks/auth";
+import NavDashboard from "@/components/NavDashboard";
 
 export default function trainerProfile() {
   const [course, setCourse] = useState([]);
+  const user = useAuth();
 
- 
+  const id = console.log(user.user);
 
   setTimeout(() => console.log("1"));
   console.log("2");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/trainer/2")
+      .get(`http://localhost:8000/api/trainer/${id}`)
       .then(function (response) {
         // handle success
         console.log(response.data);
@@ -26,7 +29,6 @@ export default function trainerProfile() {
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
       });
   }, []);
 
