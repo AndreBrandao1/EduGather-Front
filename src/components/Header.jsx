@@ -26,14 +26,16 @@ function Header() {
             box-sizing: border-box;
           }
           .headContainer {
+            width: 100vw;
             display: flex;
             flex-wrap: wrap;
             height: 70px;
-            background-color: rgb(255, 255, 255);
-            width: 100vw;
+            background: linear-gradient(
+              90deg,
+              rgba(255, 134, 7, 1) 44%,
+              rgba(173, 0, 255, 1) 94%
+            );
             padding-left: 70px;
-            border-bottom: 1px solid black;
-            /* z-index: -1; */
           }
           .headWrapper {
             display: flex;
@@ -46,12 +48,15 @@ function Header() {
           }
           .title > h2 {
             color: rgb(0, 0, 0);
+            color: white;
           }
           .title > p {
             color: rgb(0, 0, 0);
+            color: white;
           }
           .title > h2 > span {
-            color: rgb(9, 112, 72);
+            color: purple;
+            font-weight: bold;
           }
           .profile {
             position: absolute;
@@ -67,7 +72,7 @@ function Header() {
           @media only screen and (min-width: 768px) {
             .headContainer {
               padding-left: 200px;
-              width: 80vw;
+              width: 100vw;
             }
             .profile {
               position: absolute;

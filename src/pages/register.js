@@ -66,6 +66,7 @@ const Register = () => {
                 id="trainer"
                 name="role"
                 value="trainer"
+                required
               />
               <label for="trainer">Trainer</label>
 

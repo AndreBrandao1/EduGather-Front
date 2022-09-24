@@ -9,7 +9,8 @@ import {
   faSignOutAlt,
   faTachometerAlt,
   faUser,
-  faPenToSquare,   
+  faPenToSquare,
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
@@ -23,6 +24,7 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
         </div>
         <div className="wrapper">
           <ul>
+            {/* first link  */}
             <li>
               <FontAwesomeIcon
                 icon={faTachometerAlt}
@@ -32,41 +34,107 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                 <Link href="/dashboard">Dashboard</Link>
               </div>
             </li>
+            {/* second link */}
             <li>
-              <FontAwesomeIcon
-                icon={faUser}
-                style={{ width: "18px", cursor: "pointer" }}
-              />
-              <div className="link">
-                <Link href="/dashboard/profile">Profile</Link>
-              </div>
+              {user?.role == "admin" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/manageTrainers">
+                      Manage Trainers
+                    </Link>
+                  </div>
+                </>
+              )}
+              {user?.role == "trainer" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/profile">Profile</Link>
+                  </div>
+                </>
+              )}
+              {user?.role == "trainee" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/profile">Profile</Link>
+                  </div>
+                </>
+              )}
             </li>
+            {/* third link */}
             <li>
-              <FontAwesomeIcon
-                icon={faBookOpen}
-                style={{ width: "18px", cursor: "pointer" }}
-              />
-              <div className="link">
-                <Link href="/dashboard/myCouses">My Courses</Link>
-              </div>
+              {user?.role == "admin" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/manageCourses">Manage Courses</Link>
+                  </div>
+                </>
+              )}
+              {user?.role == "trainer" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/myCouses">My Courses</Link>
+                  </div>
+                </>
+              )}
+              {user?.role == "trainee" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faAddressCard}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/myCourses">Contacts</Link>
+                  </div>
+                </>
+              )}
             </li>
+
+            {/* fourth link */}
             <li>
-              <FontAwesomeIcon
-                icon={faHeart}
-                style={{ width: "18px", cursor: "pointer" }}
-              />{" "}
-              <div className="link">
-                {user?.role == "trainer" && (
-                  <Link href="/dashboard/students">Students</Link>
-                )}
-                {user?.role == "trainee" && (
-                  <Link href="/dashboard/students">Contacts</Link>
-                )}
-                {user?.role == "admin" && (
-                  <Link href="/dashboard/students">Manage Trainers</Link>
-                )}
-              </div>
+              {user?.role == "admin" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/students">Manage Trainers</Link>
+                  </div>
+                </>
+              )}
+              {user?.role == "trainer" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/students">Manage Trainers</Link>
+                  </div>
+                </>
+              )}
             </li>
+            {/* fifth link */}
             <li>
               <FontAwesomeIcon
                 icon={faCog}
@@ -76,11 +144,13 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                 <Link href="/dashboard/myCouses">Settings</Link>
               </div>
             </li>
+
+            {/* LogOut */}
             <li>
               <FontAwesomeIcon
                 icon={faSignOutAlt}
                 style={{ width: "18px", cursor: "pointer" }}
-              />{" "}
+              />
               <a onClick={logout} href="#">
                 Logout
               </a>
@@ -92,11 +162,15 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
       <style jsx>
         {`
           .navcontainer {
+            color: white;
             position: fixed;
             width: 70px;
             height: 100%;
-            background-color: #fff;
-            box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0.75);
+            background: linear-gradient(
+              180deg,
+              rgba(255, 134, 7, 1) 44%,
+              rgba(173, 0, 255, 1) 94%
+            );
           }
 
           .wrapper {
@@ -127,7 +201,14 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
             font-weight: bold;
           }
           .link {
+            white-space: nowrap;
             opacity: 0;
+          }
+
+          .wrapper > ul > li {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
           }
           .wrapper > ul > li:hover {
             color: purple;
@@ -148,6 +229,11 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
               width: 200px;
             }
 
+            .wrapper > ul > li {
+              flex-direction: row;
+              justify-content: unset;
+              align-items: center;
+            }
             .wrapper > ul > li > a {
               opacity: 1;
             }
@@ -182,7 +268,7 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
               list-style: none;
               font-size: 18px;
               text-decoration: none;
-              opacity: 0.6;
+              opacity: 1;
             }
 
             .wrapper > ul > li > a:hover {

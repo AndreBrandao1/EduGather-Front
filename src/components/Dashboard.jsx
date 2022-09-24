@@ -12,11 +12,15 @@ export function Dashboard({ children }) {
       <style jsx>
         {`
           .container {
+            width: 100vw;
+            margin-left: 100px;
           }
 
           @media screen and (min-width: 768px) {
             .container {
-              margin-left: 140px;
+              width: 80%;
+              margin-left: auto;
+              margin-right: 50px;
             }
           }
         `}
