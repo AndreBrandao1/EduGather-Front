@@ -11,7 +11,7 @@ import { Square } from "@/components/Square";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function categoryDetails() {
+export default function courseDetails() {
   const [course, setCourse] = useState([]);
   const [user, setUser] = useState([]);
   const [categ, setCateg] = useState([]);
@@ -27,9 +27,11 @@ export default function categoryDetails() {
   console.log(lang);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/courses_tag/${givenId}`)
+      .get(`http://localhost:8000/api/courses/`)
       .then(function (response) {
         // handle success
+        setCourse(response.data);
+        console.log("courses");
         console.log(response.data);
       })
       .catch(function (error) {
@@ -40,11 +42,12 @@ export default function categoryDetails() {
 
   return (
     <>
-      <p>page that shows all the courses in the given category</p>
       <p>
-        API"/courses_tag/[tag_id]" something still not working on the ajax
-        call.......... to be fixed tomorrow
+        the page where all the courses are avalable each will have a link to
+        connect to the course page which is the inside. it needs some
+        adjustments
       </p>
+      {/* The courses are available and need a map through to use the mini course presentation with a link to (((((/courses/[id]))))) */}
       {/* Css */}
       <style jsx>{``}</style>
     </>
