@@ -2,15 +2,14 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "@/hooks/auth";
 import {
-  faBookOpen,
   faCog,
   faHeart,
-  faRocket,
   faSignOutAlt,
   faTachometerAlt,
   faUser,
   faPenToSquare,
   faAddressCard,
+  faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
@@ -118,18 +117,20 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                     style={{ width: "18px", cursor: "pointer" }}
                   />
                   <div className="link">
-                    <Link href="/dashboard/students">Manage Trainers</Link>
+                    <Link href="/dashboard/manageTrainers">
+                      Manage Trainers
+                    </Link>
                   </div>
                 </>
               )}
               {user?.role == "trainer" && (
                 <>
                   <FontAwesomeIcon
-                    icon={faHeart}
+                    icon={faQuestion}
                     style={{ width: "18px", cursor: "pointer" }}
                   />
                   <div className="link">
-                    <Link href="/dashboard/students">Manage Trainers</Link>
+                    <Link href="/dashboard/students">Manage Requests</Link>
                   </div>
                 </>
               )}

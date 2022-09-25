@@ -19,8 +19,7 @@ export function Dashboard({ children }) {
           @media screen and (min-width: 768px) {
             .container {
               width: 80%;
-              margin-left: auto;
-              margin-right: 50px;
+              margin-left: 250px;
             }
           }
         `}
