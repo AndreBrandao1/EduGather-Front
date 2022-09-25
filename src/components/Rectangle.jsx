@@ -8,6 +8,8 @@ function Rectangle({
   src,
   bk_color,
   children,
+  tabletWidth,
+  desktopWidth,
 }) {
   return (
     <>
@@ -51,8 +53,9 @@ function Rectangle({
 
           @media screen and (min-width: 768px) {
             .container {
-              width: 200px;
+              width: ${tabletWidth};
               padding: 30px 20px;
+              height: 250px;
             }
 
             h2 {
@@ -65,7 +68,7 @@ function Rectangle({
           }
           @media screen and (min-width: 992px) {
             .container {
-              width: 250px;
+              width: ${desktopWidth};
               padding: 30px 20px;
             }
 
