@@ -13,34 +13,37 @@ function manageCourses() {
   const user = useAuth();
   const [onHold, setOnHold] = useState([]);
   const [trainerCourses, setTrainerCourses] = useState([]);
-  const [count, setCount] = useState([]);
+  const [count, setCount] = useState(1);
+  const [courseId, setCourseId] = useState("");
+  const [trainerId, setTrainerId] = useState("");
+  const [decision, setDecision] = useState(" ");
   console.log(count);
-  const handleClick = (num) => {
-    setCount(() => num + 1);
-  };
 
+  // use effect will run when user.user.role exists every time "count".value changes
   useEffect(() => {
+    // if user type = admin fetch all course with status on hold so admin can manage them
     if (user?.user?.role == "admin") {
-      //fetching all categories to to be displayed in the <select>
       axios
         .get("http://localhost:8000/api/user_courses/on_hold")
         .then(function (response) {
           // handle success
           setOnHold(response.data);
+          console.log(onHold);
         })
         .catch(function (error) {
           // handle error
           console.log(error);
         });
+
+      // if user type =  Trainer fetch his courses
     } else if (user?.user?.role == "trainer") {
       const userId = user?.user?.id;
-      //fetching all categories to to be displayed in the <select>
+
       axios
         .get(`http://localhost:8000/api/trainer/${userId}`)
         .then(function (response) {
           // handle success
           setTrainerCourses(response.data);
-          console.log(response.data);
         })
         .catch(function (error) {
           // handle error
@@ -49,9 +52,40 @@ function manageCourses() {
     }
   }, [user?.user?.id, count]);
 
+  // function to handle click of buttons from ManageResources component$
+
+  const handleClick = (decision, e) => {
+    const id = e;
+    setDecision(decision);
+    setCourseId(id);
+    setCount(count + 1);
+  };
+
+  // Function that take uses APi route to accept or refuse a course;
+  function courseDecision(e) {
+    e.preventDefault();
+    // const approved = new FormData(e.target);
+
+    // approved.append("new_status", decision);
+    // approved.append("cou_id", courseId);
+    axios({
+      method: "post",
+      url: `http://localhost:8000/api/aprove_course/${courseId}/${decision}`,
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  // Return -------
+
   return (
     <>
       <Dashboard>
+        {/* if user type = admin manageCourses page will have the courses for admin to manage */}
         <div className="content">
           {user?.user?.role == "admin" && (
             <>
@@ -61,11 +95,10 @@ function manageCourses() {
               </h1>
               {onHold.map((course) => {
                 const courseIdTest = course.id;
-                console.log(courseIdTest);
                 return (
                   <ManageResources
+                    decisionFunction={courseDecision}
                     getId={courseIdTest}
-                    getId2={courseIdTest}
                     resourceTitle={course.cou_description}
                     resourceName={`${course.first_name} ${course.last_name}`}
                     hrefTitle={`/dashboard/manageCourses/${course.id}`}
@@ -76,6 +109,7 @@ function manageCourses() {
               })}
             </>
           )}
+          {/* if user type = trainer manageCourses page will have the courses of logged user so he can edit or delete them */}
           {user?.user?.role == "trainer" && (
             <>
               <h1>
@@ -112,6 +146,8 @@ function manageCourses() {
           )}
         </div>
       </Dashboard>
+
+      {/* Styles */}
       <style jsx>
         {`
           .adminSpan {

@@ -13,6 +13,7 @@ import ReactDOM from "react-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { SideBar } from "@/components/SideBar";
+import { StartNow } from "@/components/StartNow";
 
 export default function Home() {
   const { user } = useAuth({ middleware: "guest" });
@@ -36,28 +37,29 @@ export default function Home() {
             </div>
             <div>
               <img src="assets/love.jpg" />
-              <p className="legend">Legend 2</p>
             </div>
             <div>
               <img src="assets/educate.jpg" />
-              <p className="legend">Legend 3</p>
             </div>
           </Carousel>
         </section>
         <section className="ourTrainers"></section>
         <section className="startNow">
-          <img src="/assets/startNow.png" />
-          <div className="startLink">
-            <span>You can also become one of our</span>
-            <h2>Trainers</h2>
-            <Link href="#">
-              <button>Start now</button>
-            </Link>
-          </div>
+          <StartNow
+            buttonLabel="Start Now"
+            firstText="Your can also become of of our"
+            secondText="Trainers"
+            href="#"
+            src="assets/startNow.png"
+          />{" "}
         </section>
       </div>
       <style jsx>
         {`
+          html,
+          body {
+            overflow-x: hidden;
+          }
           .container {
             width: 100vw;
           }
@@ -67,13 +69,6 @@ export default function Home() {
             width: 100%;
             height: 600px;
           }
-          .startNow img {
-            max-width: 50%;
-            height: 500px;
-            right: 400px;
-            position: absolute;
-            bottom: 0;
-          }
 
           h2 {
             font-size: 35px;
@@ -82,8 +77,9 @@ export default function Home() {
           }
 
           .ourTrainers {
+            display: flex;
             background-color: red;
-            width: 100%;
+            width: 100vw;
             height: 600px;
           }
           .startNow {
@@ -93,30 +89,6 @@ export default function Home() {
             height: 600px;
             align-items: center;
             justify-content: center;
-            position: relative;
-            align-self: center;
-          }
-
-          .startLink {
-            display: flex;
-            gap: 10px;
-            flex-direction: column;
-            width: 300px;
-            position: absolute;
-            left: 700px;
-          }
-
-          .startLink span {
-            font-size: 35px;
-          }
-          .startLink button {
-            background-color: rgb(223, 170, 58);
-            width: 150px;
-            color: white;
-            font-weight: bold;
-            padding: 20px 30px;
-            border-radius: 25px;
-            font-size: 18px;
           }
         `}
       </style>
