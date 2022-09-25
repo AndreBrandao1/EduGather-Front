@@ -1,10 +1,14 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const containerRef = useRef();
+  useEffect(() => {
+    const windowW = window.innerWidth;
+    console.log(windowW);
+  }, []);
 
   return (
     <>

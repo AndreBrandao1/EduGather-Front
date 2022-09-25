@@ -2,40 +2,71 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import axios from "@/lib/axios";
+import { useState } from "react";
 export function ManageResources({
   resourceTitle,
   resourceName,
   hrefTitle,
   hrefName,
   getId,
-  approve,
-  refuse,
 }) {
+  const [decision, setDecision] = useState([]);
+  const [courseId, setCourseId] = useState([]);
+
+  function courseDecision(e) {
+    e.preventDefault();
+    const approved = new FormData(e.target);
+
+    approved.append("new_status", decision);
+    approved.append("cou_id", courseId);
+    axios({
+      method: "post",
+      url: `http://localhost:8000/api/aprove_course/${courseId}/approved`,
+      data: approved,
+    })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <>
       <div className="resourceContainer">
         <div className="info">
-          <Link href={hrefTitle}>{resourceTitle}</Link>
+          <Link href={hrefTitle}>
+            <h2>{resourceTitle}</h2>
+          </Link>
           <Link href={hrefName}>{resourceName}</Link>
         </div>
-        <div className="buttons">
-          <div
+
+        <form onSubmit={courseDecision} className="buttons">
+          <button
+            value={getId}
             className="approve"
-            onClick={() => {
-              {
-                getId;
-              }
-              {
-                approve;
-              }
+            onClick={(e) => {
+              const id = e.target.value;
+              setCourseId(1);
+              setDecision("aproved");
+              console.log(e.target.value);
             }}
           >
             <FontAwesomeIcon icon={faCheck} width={30} height={30} />
-          </div>
-          <div className="deny" onClick={refuse}>
+          </button>
+          <button
+            value={getId}
+            className="deny"
+            onClick={(e) => {
+              const id = e.target.value;
+              setCourseId(id);
+              setDecision("denied");
+            }}
+          >
             <FontAwesomeIcon icon={faX} width={30} height={30} />
-          </div>
-        </div>
+          </button>
+        </form>
       </div>
       <style jsx>
         {`
@@ -70,7 +101,7 @@ export function ManageResources({
           }
 
           h2 {
-            font-size: 20px;
+            font-size: 15px;
             font-weight: bold;
           }
           .resourceContainer {
@@ -78,10 +109,29 @@ export function ManageResources({
             background-color: lightgrey;
             border-radius: 25px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
             height: auto;
             padding: 40px;
             width: 60%;
+            text-align: center;
+          }
+
+          @media screen and (min-width: 768px) {
+            h2 {
+              font-size: 20px;
+              font-weight: bold;
+            }
+
+            .info {
+              flex-direction: row;
+              gap: 50px;
+            }
+            .resourceContainer {
+              flex-direction: unset;
+              justify-content: space-between;
+            }
           }
         `}
       </style>
