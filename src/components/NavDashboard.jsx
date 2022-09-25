@@ -7,19 +7,20 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/auth";
 function NavDashboard() {
   const { user } = useAuth({ middleware: "auth" });
-  const [course, setCourse] = useState();
+  const [trainer, setTrainer] = useState();
   const loggedUser = user?.id;
-  const countCourse = course?.length;
-  console.log(countCourse);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/trainer/${loggedUser}`)
+      .get("http://localhost:8000/api/get_users_admin/trainer/on_hold")
       .then(function (response) {
-        setCourse(response.data);
+        // handle success
+        // setTrainer(response);
+        console.log(response.data);
       })
       .catch(function (error) {
         // handle error
+        console.log(error);
       });
   }, []);
 
@@ -29,9 +30,11 @@ function NavDashboard() {
         <div className="topContent">
           <Rectangle
             redirectTo="/MyCourses"
-            first_el={countCourse}
-            second_el="Courses"
+            first_el={trainer}
+            second_el="Trainers waiting for approval"
             bk_color="linear-gradient(90deg, rgba(245,47,0,1) 24%, rgba(235,154,58,1) 70%);"
+            tabletWidth="250px"
+            desktopWidth="450px"
           >
             <FontAwesomeIcon
               icon={faBookOpen}
@@ -40,9 +43,11 @@ function NavDashboard() {
           </Rectangle>
           <Rectangle
             redirectTo="/MyCourses"
-            first_el={countCourse}
+            first_el=""
             second_el="Courses"
             bk_color="linear-gradient(90deg, rgba(0,60,245,1) 24%, rgba(58,161,235,1) 70%)"
+            tabletWidth="250px"
+            desktopWidth="450px"
           >
             <FontAwesomeIcon
               icon={faBookOpen}
@@ -51,9 +56,11 @@ function NavDashboard() {
           </Rectangle>
           <Rectangle
             redirectTo="/MyCourses"
-            first_el={countCourse}
+            first_el=""
             second_el="Courses"
             bk_color="linear-gradient(90deg, rgba(154,0,245,1) 24%, rgba(199,58,235,1) 70%)"
+            tabletWidth="250px"
+            desktopWidth="450px"
           >
             <FontAwesomeIcon
               icon={faBookOpen}
@@ -62,9 +69,11 @@ function NavDashboard() {
           </Rectangle>
           <Rectangle
             redirectTo="/MyCourses"
-            first_el={countCourse}
+            first_el=""
             second_el="Courses"
             bk_color=" linear-gradient(90deg, rgba(58,235,172,1) 24%, rgba(0,245,59,1) 70%)"
+            tabletWidth="250px"
+            desktopWidth="450px"
           >
             <FontAwesomeIcon
               icon={faBookOpen}

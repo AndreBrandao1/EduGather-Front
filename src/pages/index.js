@@ -14,9 +14,25 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import { SideBar } from "@/components/SideBar";
 import { StartNow } from "@/components/StartNow";
+import { SponsoredTrainer } from "@/components/SponsoredTrainer";
 
 export default function Home() {
   const { user } = useAuth({ middleware: "guest" });
+  const [trainers, setTrainers] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/get_users_admin/trainer/verified`,
+    })
+      .then(function (response) {
+        setTrainers(response.data);
+        console.log(response.data.slice(-5));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>
@@ -24,26 +40,75 @@ export default function Home() {
       <Hero />
       <div className="main-content">
         <section className="intro">
-          <Carousel
-            width="50%"
-            showThumbs={false}
-            autoPlay={true}
-            showIndicators={true}
-            showStatus={false}
+          <div
+            id="carouselExampleIndicators"
+            class="carousel slide"
+            data-ride="carousel"
           >
-            <div>
-              <img src="assets/build.jpg" />
-              <p className="legend">Legend 1</p>
+            <ol class="carousel-indicators">
+              <li
+                data-target="#carouselExampleIndicators"
+                data-slide-to="0"
+                class="active"
+              ></li>
+              <li
+                data-target="#carouselExampleIndicators"
+                data-slide-to="1"
+              ></li>
+              <li
+                data-target="#carouselExampleIndicators"
+                data-slide-to="2"
+              ></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="..." alt="First slide" />
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="..." alt="Second slide" />
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="..." alt="Third slide" />
+              </div>
             </div>
-            <div>
-              <img src="assets/love.jpg" />
-            </div>
-            <div>
-              <img src="assets/educate.jpg" />
-            </div>
-          </Carousel>
+            <a
+              class="carousel-control-prev"
+              href="#carouselExampleIndicators"
+              role="button"
+              data-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#carouselExampleIndicators"
+              role="button"
+              data-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
         </section>
-        <section className="ourTrainers"></section>
+        <section className="ourTrainers">
+          {trainers.slice(-5).map((t) => {
+            return (
+              <SponsoredTrainer
+                category={t.role}
+                src="assets/userPic.jpg"
+                trainerName={`${t.first_name} ${t.last_name}`}
+                key={1}
+              />
+            );
+          })}
+        </section>
         <section className="startNow">
           <StartNow
             buttonLabel="Start Now"
@@ -51,7 +116,7 @@ export default function Home() {
             secondText="Trainers"
             href="#"
             src="assets/startNow.png"
-          />{" "}
+          />
         </section>
       </div>
       <style jsx>
@@ -78,15 +143,18 @@ export default function Home() {
 
           .ourTrainers {
             display: flex;
-            background-color: red;
-            width: 100vw;
+            background-color: grey;
+            width: 100%;
             height: 600px;
+            gap: 50px;
+            padding: 50px 100px;
+            align-items: center;
           }
           .startNow {
             display: flex;
             background-color: white;
             width: 100%;
-            height: 600px;
+            height: 500px;
             align-items: center;
             justify-content: center;
           }
