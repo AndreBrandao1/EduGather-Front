@@ -11,7 +11,7 @@ function manageTrainers() {
   useEffect(() => {
     //fetching all categories to to be displayed in the <select>
     axios
-      .get("http://localhost:8000//get_users_admin/trainer/on_hold")
+      .get("http://localhost:8000/api/get_users_admin/trainer/on_hold")
       .then(function (response) {
         // handle success
         setOnHold(response.data);
