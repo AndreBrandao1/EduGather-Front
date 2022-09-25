@@ -91,7 +91,7 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                     style={{ width: "18px", cursor: "pointer" }}
                   />
                   <div className="link">
-                    <Link href="/dashboard/myCouses">My Courses</Link>
+                    <Link href="/dashboard/manageCourses">My Courses</Link>
                   </div>
                 </>
               )}

@@ -10,23 +10,25 @@ export function ManageResources({
   hrefTitle,
   hrefName,
   getId,
+  handleClick,
+  getId2,
 }) {
-  const [decision, setDecision] = useState([]);
-  const [courseId, setCourseId] = useState([]);
+  const [decision, setDecision] = useState();
+  const [courseId, setCourseId] = useState("");
 
   function courseDecision(e) {
     e.preventDefault();
-    const approved = new FormData(e.target);
+    handleClick(100);
+    // const approved = new FormData(e.target);
 
-    approved.append("new_status", decision);
-    approved.append("cou_id", courseId);
+    // approved.append("new_status", decision);
+    // approved.append("cou_id", courseId);
     axios({
       method: "post",
-      url: `http://localhost:8000/api/aprove_course/${courseId}/approved`,
-      data: approved,
+      url: `http://localhost:8000/api/aprove_course/${courseId}/${decision}`,
     })
       .then(function (response) {
-        console.log(response.data);
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -48,20 +50,21 @@ export function ManageResources({
             className="approve"
             onClick={(e) => {
               const id = e.target.value;
-              setCourseId(1);
-              setDecision("aproved");
+              console.log(id);
+              setCourseId(id);
+              setDecision("verified");
               console.log(e.target.value);
             }}
           >
             <FontAwesomeIcon icon={faCheck} width={30} height={30} />
           </button>
           <button
-            value={getId}
+            value={getId2}
             className="deny"
             onClick={(e) => {
               const id = e.target.value;
-              setCourseId(id);
               setDecision("denied");
+              setCourseId(id);
             }}
           >
             <FontAwesomeIcon icon={faX} width={30} height={30} />
