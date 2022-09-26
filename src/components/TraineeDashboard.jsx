@@ -25,7 +25,7 @@ export function TraineeDashboard() {
 
   return (
     <>
-      <div className="content">
+      <div className="container">
         <div className="topContent">
           <Rectangle
             redirectTo="/MyCourses"
@@ -75,8 +75,8 @@ export function TraineeDashboard() {
       </div>
       <style jsx>
         {`
-          .content {
-            width: auto;
+          .container {
+            width: 100%;
             padding-left: 70px;
           }
 

@@ -31,6 +31,7 @@ function Rectangle({
             display: flex;
             height: auto;
             justify-content: space-between;
+            align-items: center;
             padding: 40px 20px;
             width: 200px;
           }

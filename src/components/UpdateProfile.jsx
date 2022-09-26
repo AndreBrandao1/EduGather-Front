@@ -38,12 +38,14 @@ function UpdateProfile() {
                   setEdit(!edit);
                 } else {
                   setError("Please update fields");
+                  
                 }
               }}
             >
               Update
             </button>
             <button>Submit</button>
+            <span>{error}</span>
           </div>
           <p>{error}</p>
         </form>
