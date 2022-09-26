@@ -3,6 +3,7 @@ import Head from "next/head";
 import { GrLocation } from "react-icons/fa";
 import { SideBar } from "@/components/SideBar";
 
+
 const App = ({ Component, pageProps }) => (
   <>
     <Head>

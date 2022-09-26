@@ -11,11 +11,18 @@ import Label from "@/components/Label";
 import { SlideShow } from "@/components/SlideShow";
 import { NodeNextRequest } from "next/dist/server/base-http/node";
 import { useRouter } from "next/router";
+import { Dashboard } from "@/components/Dashboard";
 
 export default function insertCourse() {
   const { user, login } = useAuth({ middleware: "auth", redirect: "/login" });
   const userId = [user?.id];
   const [errors, setErrors] = useState([]);
+  const [lang, setLang] = useState([]);
+  const [catId, setCatId] = useState(1);
+  const checkBox = [];
+  const lanCheckBox = [];
+  const router = useRouter();
+  const ref = useRef();
   const [category, setCategory] = useState([
     {
       cat_id: 1,
@@ -53,12 +60,6 @@ export default function insertCourse() {
     },
   ]);
 
-  const [catId, setCatId] = useState(1);
-  const checkBox = [];
-  const router = useRouter();
-
-  const ref = useRef();
-
   useEffect(() => {
     //fetching all categories to to be displayed in the <select>
     axios
@@ -66,6 +67,8 @@ export default function insertCourse() {
       .then(function (response) {
         // handle success
         setCategory(response.data);
+
+        setLang(response.data[0].languages);
       })
       .catch(function (error) {
         // handle error
@@ -81,7 +84,6 @@ export default function insertCourse() {
     category.forEach((cat) => {
       if (cat.cat_id == catId) {
         setTags(cat.tags);
-        console.log(cat.tags);
       }
     });
   }, [catId]);
@@ -92,6 +94,7 @@ export default function insertCourse() {
 
     course_form.append("tags", checkBox);
     course_form.append("user_id", userId);
+    course_form.append("languages", lanCheckBox);
 
     axios({
       method: "post",
@@ -106,76 +109,105 @@ export default function insertCourse() {
 
   return (
     <>
-      <div className="container">
-        <div className="image"></div>
+      <Dashboard>
+        <div className="container">
+          <div className="image"></div>
 
-        <div className="form_container">
-          <h1>Insert Course</h1>
-          <form onSubmit={addCourse} method="post">
-            <div className="form_input">
-              <label for="title">Title:</label>
-              <input id="title" name="cou_title" type="text"></input>
-            </div>
+          <div className="form_container">
+            <h1>Insert Course</h1>
+            <form onSubmit={addCourse} method="post">
+              <div className="form_input">
+                <label for="title">Title:</label>
+                <input id="title" name="cou_title" type="text"></input>
+              </div>
 
-            <div className="form_input">
-              <label for="cat_id">Category:</label>
-              <select
-                name="cat_id"
-                id="cat_id"
-                onChange={(e) => {
-                  setCatId(e.target.value);
-                  checkBox.length = 0;
-                }}
-              >
-                {category.map(function (c) {
-                  return <option value={c.cat_id}>{c.cat_title}</option>;
-                })}
-              </select>
-            </div>
+              <div className="form_input">
+                <label for="cat_id">Category:</label>
+                <select
+                  name="cat_id"
+                  id="cat_id"
+                  onChange={(e) => {
+                    setCatId(e.target.value);
+                    checkBox.length = 0;
+                  }}
+                >
+                  {category.map(function (c) {
+                    return <option value={c.cat_id}>{c.cat_title}</option>;
+                  })}
+                </select>
+              </div>
 
-            <div className="tagsContainer">
-              <Label htmlFor="cou_tags">
-                Tag the topics that you will abord in this course:
-              </Label>
-              <div className="checkBox">
-                {/* Creating a checkbox for every tag found to category selected. */}
-                {tags.map(function (tag) {
+              <div className="tagsContainer">
+                <Label htmlFor="cou_tags">
+                  Tag the topics that you will abord in this course:
+                </Label>
+                <div className="checkBox">
+                  {/* Creating a checkbox for every tag found to category selected. */}
+                  {tags.map(function (tag) {
+                    return (
+                      <>
+                        <div>
+                          <input
+                            ref={ref}
+                            type="checkbox"
+                            id={tag.tag_id}
+                            name="tag"
+                            value={tag.tag_id}
+                            onClick={(e) => {
+                              if (e.target.checked) {
+                                const check = e.target.value;
+                                checkBox.push(check);
+                                console.log(checkBox);
+                              }
+                            }}
+                          />
+                          <label className="tagName" for={tag.id}>
+                            {tag.tag_title}
+                          </label>
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="form_input">
+                {lang.map((l) => {
                   return (
                     <>
                       <div>
                         <input
                           ref={ref}
                           type="checkbox"
-                          id={tag.tag_id}
-                          name="tag"
-                          value={tag.tag_id}
+                          id={l.lan_id}
+                          name="lan"
+                          value={l.lan_id}
                           onClick={(e) => {
                             if (e.target.checked) {
                               const check = e.target.value;
-                              checkBox.push(check);
-                              console.log(checkBox);
+                              lanCheckBox.push(check);
                             }
                           }}
                         />
-                        <label className="tagName" for={tag.id}>
-                          {tag.tag_title}
+                        <label className="lanName" for={l.id}>
+                          {l.lan_title}
                         </label>
                       </div>
                     </>
                   );
                 })}
               </div>
-            </div>
+              <div className="form_input">
+                <label for="des">Description:</label>
+                <input id="desc" name="cou_description" type="textarea"></input>
+              </div>
 
-            <div className="form_input">
-              <label for="des">Description:</label>
-              <input id="desc" name="cou_description" type="textarea"></input>
-            </div>
-
-            <button>Create</button>
-          </form>
+              <button>Create</button>
+            </form>
+          </div>
         </div>
-      </div>
+      </Dashboard>
+
       <style jsx>
         {`
           button {
@@ -188,10 +220,9 @@ export default function insertCourse() {
           }
 
           .container {
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: auto;
             display: flex;
-            flex-direction: column;
             align-items: center;
             padding-top: 100px;
           }
@@ -205,6 +236,7 @@ export default function insertCourse() {
           }
 
           form {
+            width: 60%;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -213,9 +245,9 @@ export default function insertCourse() {
           .form_container {
             display: flex;
             flex-direction: column;
+            align-items: center;
             width: 100%;
             gap: 20px;
-            width: 80%;
           }
 
            {

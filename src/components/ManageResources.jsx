@@ -12,6 +12,8 @@ export function ManageResources({
   getId,
   handleClick,
   decisionFunction,
+  displayApprove,
+  displayDeny,
 }) {
   return (
     <>
@@ -23,26 +25,23 @@ export function ManageResources({
           <Link href={hrefName}>{resourceName}</Link>
         </div>
 
-        <form onSubmit={decisionFunction} className="buttons">
+        <form className="buttons">
           <button
+            type="button"
             value={getId}
             className="approve"
             onClick={(e) => {
-              {
-                handleClick("verified", getId);
-              }
+              handleClick("verified", getId);
             }}
           >
             <FontAwesomeIcon icon={faCheck} width={30} height={30} />
           </button>
           <button
+            type="button"
             value={getId}
             className="deny"
             onClick={(e) => {
-              const courseId = e.target.value;
-              {
-                handleClick("denied", getId);
-              }
+              handleClick("denied", getId);
             }}
           >
             <FontAwesomeIcon icon={faX} width={30} height={30} />
@@ -59,6 +58,7 @@ export function ManageResources({
             height: 50px;
             background-color: green;
             border-radius: 20px;
+            display: ${displayApprove};
           }
           .buttons {
             color: white;
@@ -73,6 +73,7 @@ export function ManageResources({
             height: 50px;
             background-color: red;
             border-radius: 20px;
+            display: ${displayDeny};
           }
 
           .info {
