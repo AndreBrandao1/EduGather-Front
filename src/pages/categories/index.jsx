@@ -11,7 +11,7 @@ import { Square } from "@/components/Square";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function categoryDetails() {
+export default function categories_page() {
   const [course, setCourse] = useState([]);
   const [user, setUser] = useState([]);
   const [categ, setCateg] = useState([]);
@@ -27,9 +27,11 @@ export default function categoryDetails() {
   console.log(lang);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/courses_tag/${givenId}`)
+      .get(`http://localhost:8000/api/categories/`)
       .then(function (response) {
         // handle success
+        setCourse(response.data);
+        console.log("courses");
         console.log(response.data);
       })
       .catch(function (error) {
@@ -40,10 +42,15 @@ export default function categoryDetails() {
 
   return (
     <>
-      <p>page that shows all the courses in the given category</p>
       <p>
-        API"/courses_tag/[tag_id]" something still not working on the ajax
-        call.......... to be fixed tomorrow
+        this page will show all the categories and the related tags, when click
+        on a <b>(((category)))</b> link it to "categories/[cat_id]" where you
+        can dicplay all the tags of that categoory and if you wish you can
+        display each tag in a part with some samples of its courses by fetching
+        the next api on click at any <b>(((tag)))</b> we can display the page of
+        each tag and its related courses by linking it to
+        "categories/[cat_id/tag_id]" and then fetch the follosing
+        api=----="/courses_tag/[tag_id]"
       </p>
       {/* Css */}
       <style jsx>{``}</style>
