@@ -15,7 +15,6 @@ function manageCourses() {
   const [trainerCourses, setTrainerCourses] = useState([]);
   const [count, setCount] = useState(1);
   const [courseId, setCourseId] = useState("");
-  const [trainerId, setTrainerId] = useState("");
   const [decision, setDecision] = useState(" ");
   console.log(count);
 
@@ -80,19 +79,22 @@ function manageCourses() {
       });
   }
 
+  console.log(user?.user?.id);
+
   // Return -------
 
   return (
     <>
       <Dashboard>
         {/* if user type = admin manageCourses page will have the courses for admin to manage */}
-        <div className="content">
+        <div className="container">
           {user?.user?.role == "admin" && (
             <>
               <h1>
                 <span className="adminSpan">{onHold.length}</span> Courses
                 Waiting for approval
               </h1>
+
               {onHold.map((course) => {
                 const courseIdTest = course.id;
                 return (
@@ -155,7 +157,7 @@ function manageCourses() {
             font-weight: bold;
           }
 
-          .content {
+          .container {
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -179,8 +181,7 @@ function manageCourses() {
             position: relative;
           }
           @media screen and (min-width: 768px) {
-            .content {
-              align-items: flex-start;
+            .container {
             }
           }
         `}

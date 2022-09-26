@@ -41,8 +41,8 @@ export function CourseCard({
           /* Trainer Info*/
 
           .course_container {
-            width: 800px;
-            height: 350px;
+            width: auto;
+            height: auto;
             display: flex;
             border: 1px solid black;
           }

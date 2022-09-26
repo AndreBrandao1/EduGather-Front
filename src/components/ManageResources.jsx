@@ -79,6 +79,7 @@ export function ManageResources({
             display: flex;
             flex-direction: column;
             gap: 30px;
+            justify-content: center;
           }
 
           h2 {
@@ -101,7 +102,7 @@ export function ManageResources({
 
           @media screen and (min-width: 768px) {
             h2 {
-              font-size: 20px;
+              font-size: 16px;
               font-weight: bold;
             }
 
