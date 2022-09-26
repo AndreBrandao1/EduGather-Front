@@ -10,8 +10,10 @@ import { Title } from "@/../public/styles/styledComponents";
 import { Square } from "@/components/Square";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { CourseCard } from "@/components/CourseCard";
 
 export default function categories_page() {
+  const [categories, setCategories] = useState([]);
   const [course, setCourse] = useState([]);
   const [user, setUser] = useState([]);
   const [categ, setCateg] = useState([]);
@@ -27,11 +29,10 @@ export default function categories_page() {
   console.log(lang);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/categories/`)
+      .get(`http://localhost:8000/api/categories_courses/`)
       .then(function (response) {
         // handle success
-        setCourse(response.data);
-        console.log("courses");
+        setCategories(response.data);
         console.log(response.data);
       })
       .catch(function (error) {
@@ -42,6 +43,41 @@ export default function categories_page() {
 
   return (
     <>
+      <div className="content">
+        {categories.map((CF) => {
+          console.log(CF.courses);
+
+          return (
+            <>
+              <h3>{CF.cat_title}</h3>
+
+              <div className="content">
+                {CF.courses?.length != 0 ? (
+                  CF.courses?.map((c) => {
+                    console.log(c);
+                    return (
+                      <>
+                        <CourseCard
+                          course_category={c.cat_title}
+                          course_desc={c.cou_descripton}
+                          course_tags={c.tags.map((t) => {
+                            return <span>{t.tag_title}</span>;
+                          })}
+                          course_title={c.cou_title}
+                          trainer_img={c.cou_logo}
+                          trainer_name={`${c.first_name} ${c.last_name}`}
+                        />
+                      </>
+                    );
+                  })
+                ) : (
+                  <p>No results were found</p>
+                )}
+              </div>
+            </>
+          );
+        })}
+      </div>
       <p>
         this page will show all the categories and the related tags, when click
         on a <b>(((category)))</b> link it to "categories/[cat_id]" where you
