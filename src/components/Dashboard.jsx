@@ -13,13 +13,17 @@ export function Dashboard({ children }) {
         {`
           .container {
             width: 100vw;
-            margin-left: 100px;
+             {
+              /* margin-left: 100px; */
+            }
           }
 
           @media screen and (min-width: 768px) {
             .container {
-              width: 80%;
-              margin-left: 250px;
+              width: 100%;
+               {
+                /* margin-left: 250px; */
+              }
             }
           }
         `}

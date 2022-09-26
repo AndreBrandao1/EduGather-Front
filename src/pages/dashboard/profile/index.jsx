@@ -9,8 +9,10 @@ import { useState, useEffect } from "react";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { EditProfile } from "@/components/EditProfile";
+import { Dashboard } from "@/components/Dashboard";
 
-const Dashboard = () => {
+const profileIndex = () => {
   const { user } = useAuth({ middleware: "auth" });
   const [course, setCourse] = useState();
   const loggedUser = user?.id;
@@ -32,12 +34,11 @@ const Dashboard = () => {
 
   return (
     <>
-      {}
-      <LeftNavbar />
-      <Header />
-      <div className="content">
-        <p>Profile</p>
-      </div>
+      <Dashboard>
+        <div className="content">
+          <EditProfile></EditProfile>
+        </div>
+      </Dashboard>
       <style jsx>
         {`
           .content {
@@ -81,4 +82,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default profileIndex;

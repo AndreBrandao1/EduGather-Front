@@ -1,4 +1,4 @@
-import LeftNavbar from "@/components/LeftNavbar";
+  import LeftNavbar from "@/components/LeftNavbar";
 import Rectangle from "@/components/Rectangle";
 import UpdateProfile from "@/components/UpdateProfile";
 import { useAuth } from "@/hooks/auth";
