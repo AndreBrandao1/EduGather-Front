@@ -10,6 +10,7 @@ import { Title } from "@/../public/styles/styledComponents";
 import { Square } from "@/components/Square";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { CourseCard } from "@/components/CourseCard";
 
 export default function courseDetails() {
   const [course, setCourse] = useState([]);
@@ -42,6 +43,28 @@ export default function courseDetails() {
 
   return (
     <>
+      <div className="content">
+        {course?.length != 0 ? (
+          course?.map((c) => {
+            return (
+              <>
+                <CourseCard
+                  course_category={c.cat_title}
+                  course_desc={c.cou_descripton}
+                  course_tags={c.tags.map((t) => {
+                    return <span>{t.tag_title}</span>;
+                  })}
+                  course_title={c.cou_title}
+                  trainer_img={c.cou_logo}
+                  trainer_name={`${c.first_name} ${c.last_name}`}
+                />
+              </>
+            );
+          })
+        ) : (
+          <p>No results were found</p>
+        )}
+      </div>
       <p>
         the page where all the courses are avalable each will have a link to
         connect to the course page which is the inside. it needs some
