@@ -2,20 +2,16 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { useAuth } from "@/hooks/auth";
-import { CourseCard } from "@/components/CourseCard";
 import axios from "axios";
 import { useState, UseEffect, useEffect } from "react";
-import { Button } from "@/components/Layouts/Button";
-import { Stats } from "@/components/Stats";
 import { Hero } from "@/components/Hero";
 
 import ReactDOM from "react-dom";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-import { SideBar } from "@/components/SideBar";
+
 import { StartNow } from "@/components/StartNow";
 import { SponsoredTrainer } from "@/components/SponsoredTrainer";
 import { SlideShow } from "@/components/SlideShow";
+import { Nav } from "@/components/Nav";
 
 export default function Home() {
   const { user } = useAuth({ middleware: "guest" });
@@ -37,7 +33,7 @@ export default function Home() {
 
   return (
     <>
-      <SideBar />
+      <Nav />
       <Hero />
       <div className="main-content">
         <section className="intro">
