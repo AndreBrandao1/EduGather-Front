@@ -19,23 +19,23 @@ export default function courseDetails() {
   const [lang, setLang] = useState([]);
 
   const router = useRouter();
-  const givenId = router.query.courseId;
+  const givenId = router.query.id;
   console.log(givenId);
-  console.log(user);
-  console.log(categ);
-  console.log(tags);
-  console.log(lang);
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/courses/${givenId}`)
       .then(function (response) {
         // handle success
-        console.log(response.data[0]);
+        console.log(response.data[0].first_name);
         setCourse(response.data[0]);
         setUser(response.data[0].user);
         setCateg(response.data[0].category);
         setTags(response.data[0].tags);
         setLang(response.data[0].languages);
+        console.log(user);
+        console.log(categ);
+        console.log(tags);
+        console.log(lang);
       })
       .catch(function (error) {
         // handle error
@@ -112,7 +112,6 @@ export default function courseDetails() {
           </div>
         </div>
       </div>
-
       {/* Css */}
       <style jsx>{`
         .container {

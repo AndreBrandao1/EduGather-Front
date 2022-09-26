@@ -11,7 +11,7 @@ import { Square } from "@/components/Square";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function categoryDetails() {
+function trainer_page() {
   const [course, setCourse] = useState([]);
   const [user, setUser] = useState([]);
   const [categ, setCateg] = useState([]);
@@ -19,15 +19,15 @@ export default function categoryDetails() {
   const [lang, setLang] = useState([]);
 
   const router = useRouter();
-  const givenId = router.query.courseId;
-  console.log(givenId);
+  const givenId = router.query.id;
+  console.log(router.query.id);
   console.log(user);
   console.log(categ);
   console.log(tags);
   console.log(lang);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/courses_tag/${givenId}`)
+      .get(`http://localhost:8000/api/trainer/${givenId}`)
       .then(function (response) {
         // handle success
         console.log(response.data);
@@ -40,13 +40,14 @@ export default function categoryDetails() {
 
   return (
     <>
-      <p>page that shows all the courses in the given category</p>
       <p>
-        API"/courses_tag/[tag_id]" something still not working on the ajax
-        call.......... to be fixed tomorrow
+        the page shows all the courses that belong to a specific which includes,
+        aproved, denied and on_hold
       </p>
+
       {/* Css */}
       <style jsx>{``}</style>
     </>
   );
 }
+export default trainer_page;
