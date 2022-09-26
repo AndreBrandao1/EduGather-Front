@@ -10,6 +10,7 @@ import {
   faPenToSquare,
   faAddressCard,
   faQuestion,
+  faA,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
@@ -98,11 +99,13 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
               {user?.role == "trainee" && (
                 <>
                   <FontAwesomeIcon
-                    icon={faAddressCard}
+                    icon={faQuestion}
                     style={{ width: "18px", cursor: "pointer" }}
                   />
                   <div className="link">
-                    <Link href="/dashboard/myCourses">Contacts</Link>
+                    <Link href="/dashboard/manageRequests">
+                      Manage Requests
+                    </Link>
                   </div>
                 </>
               )}
@@ -130,7 +133,20 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                     style={{ width: "18px", cursor: "pointer" }}
                   />
                   <div className="link">
-                    <Link href="/dashboard/students">Manage Requests</Link>
+                    <Link href="/dashboard/manageRequests">
+                      Manage Requests
+                    </Link>
+                  </div>
+                </>
+              )}
+              {user?.role == "trainee" && (
+                <>
+                  <FontAwesomeIcon
+                    icon={faAddressCard}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/students">Contacts</Link>
                   </div>
                 </>
               )}

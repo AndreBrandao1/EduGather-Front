@@ -7,7 +7,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { CourseCard } from "@/components/CourseCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 function manageCourses() {
   const user = useAuth();
@@ -58,18 +59,14 @@ function manageCourses() {
     setDecision(decision);
     setCourseId(id);
     setCount(count + 1);
-  };
 
-  // Function that take uses APi route to accept or refuse a course;
-  function courseDecision(e) {
-    e.preventDefault();
     // const approved = new FormData(e.target);
 
     // approved.append("new_status", decision);
     // approved.append("cou_id", courseId);
     axios({
       method: "post",
-      url: `http://localhost:8000/api/aprove_course/${courseId}/${decision}`,
+      url: `http://localhost:8000/api/aprove_course/${id}/${decision}`,
     })
       .then(function (response) {
         console.log(response);
@@ -77,7 +74,10 @@ function manageCourses() {
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
+
+  // Function that take uses APi route to accept or refuse a course;
+  function courseDecision(e) {}
 
   console.log(user?.user?.id);
 
@@ -118,17 +118,24 @@ function manageCourses() {
                 <span className="trainerSpan">{trainerCourses.length}</span>{" "}
                 active courses
               </h1>
+              <div addIcon>
+                <Link href="manageCourses/insertCourse">
+                  <FontAwesomeIcon icon={faPlus} width={50} height={50} />
+                </Link>
+              </div>
               {trainerCourses.map((c) => {
                 return (
                   <>
                     <div className="trainerCourseCard">
                       <div className="editIcon">
-                        <FontAwesomeIcon
-                          icon={faPen}
-                          width={30}
-                          height={30}
-                          cursor="pointer"
-                        />
+                        <Link href="#">
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            width={30}
+                            height={30}
+                            cursor="pointer"
+                          />
+                        </Link>
                       </div>
                       <CourseCard
                         course_category={c.cat_title}
@@ -152,6 +159,10 @@ function manageCourses() {
       {/* Styles */}
       <style jsx>
         {`
+          .addIcon {
+            position: absolute;
+            right: 0;
+          }
           .adminSpan {
             color: red;
             font-weight: bold;
@@ -164,6 +175,7 @@ function manageCourses() {
             gap: 20px;
             align-items: center;
             padding-top: 50px;
+            position: relative;
           }
 
           .editIcon {

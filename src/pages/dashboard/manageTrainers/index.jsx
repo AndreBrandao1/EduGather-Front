@@ -21,6 +21,7 @@ function manageTrainers() {
       .then(function (response) {
         // handle success
         setOnHold(response.data);
+        console.log(response.data);
       })
       .catch(function (error) {
         // handle error
@@ -29,21 +30,19 @@ function manageTrainers() {
   }, [user?.user?.id, count]);
 
   const handleClick = (decision, e) => {
-    const id = e;
     setDecision(decision);
-    setTrainerId(id);
+    setTrainerId(e);
     setCount(count + 1);
-  };
+    console.log(decision);
+    console.log(e);
 
-  function trainerDecision(e) {
-    e.preventDefault();
     // const approved = new FormData(e.target);
 
     // approved.append("new_status", decision);
     // approved.append("cou_id", courseId);
     axios({
       method: "post",
-      url: `http://localhost:8000/api/aprove_trainer/${trainerId}/${decision}`,
+      url: `http://localhost:8000/api/aprove_trainer/${e}/${decision}`,
     })
       .then(function (response) {
         console.log(response);
@@ -51,7 +50,7 @@ function manageTrainers() {
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   return (
     <>
@@ -64,8 +63,7 @@ function manageTrainers() {
             const courseIdTest = trainer.id;
             return (
               <ManageResources
-                decisionFunction={trainerDecision}
-                getId={courseIdTest}
+                getId={trainer.id}
                 resourceTitle={`${trainer.first_name} ${trainer.last_name}`}
                 resourceName=" "
                 hrefTitle={`/dashboard/manageTrainer/${trainer.id}`}

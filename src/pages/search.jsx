@@ -5,6 +5,7 @@ import { CourseCard } from "@/components/CourseCard";
 
 function search() {
   const [courses, setCourses] = useState();
+  const [fCourses, setFCourses] = useState();
   const [input, setInput] = useState();
 
   useEffect(() => {
@@ -14,6 +15,7 @@ function search() {
     })
       .then(function (response) {
         setCourses(response.data);
+        setFCourses(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -21,7 +23,7 @@ function search() {
   }, []);
 
   function search(e) {
-    console.log(e);
+    setCourses(courses);
 
     const searchV = courses.filter((element, index) => {
       const filtered = element.cat_title.toLowerCase();
@@ -30,7 +32,7 @@ function search() {
     });
 
     console.log(searchV);
-    setCourses(searchV);
+    setFCourses(searchV);
   }
   return (
     <>
@@ -47,22 +49,26 @@ function search() {
           <button>Search</button>
         </div>
         <div className="content">
-          {courses?.map((c) => {
-            return (
-              <>
-                <CourseCard
-                  course_category={c.cat_title}
-                  course_desc={c.cou_descripton}
-                  course_tags={c.tags.map((t) => {
-                    return <span>{t.tag_title}</span>;
-                  })}
-                  course_title={c.cou_title}
-                  trainer_img={c.cou_logo}
-                  trainer_name={`${c.first_name} ${c.last_name}`}
-                />
-              </>
-            );
-          })}
+          {fCourses?.length != 0 ? (
+            fCourses?.map((c) => {
+              return (
+                <>
+                  <CourseCard
+                    course_category={c.cat_title}
+                    course_desc={c.cou_descripton}
+                    course_tags={c.tags.map((t) => {
+                      return <span>{t.tag_title}</span>;
+                    })}
+                    course_title={c.cou_title}
+                    trainer_img={c.cou_logo}
+                    trainer_name={`${c.first_name} ${c.last_name}`}
+                  />
+                </>
+              );
+            })
+          ) : (
+            <p>No results were found</p>
+          )}
         </div>
       </div>
       <style jsx>

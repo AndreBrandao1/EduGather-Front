@@ -1,4 +1,4 @@
-  import LeftNavbar from "@/components/LeftNavbar";
+import LeftNavbar from "@/components/LeftNavbar";
 import Rectangle from "@/components/Rectangle";
 import UpdateProfile from "@/components/UpdateProfile";
 import { useAuth } from "@/hooks/auth";
@@ -11,8 +11,11 @@ import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
 
 const DashboardIndex = () => {
-  const { user } = useAuth({ middleware: "auth" });
   const router = useRouter();
+  const { login, user } = useAuth({
+    middleware: "auth",
+    redirectIfAuthenticated: "/login",
+  });
 
   return (
     <>
