@@ -79,12 +79,14 @@ export function EditProfile() {
           .pic {
             width: 100px;
             height: 100px;
-            background-color: orange;
+            background-image: url("public/assets/user1.png");
             border-radius: 50%;
+            background-size: contain;
+            backgroud-position: center;
           }
 
           .upload {
-            background-color: orange;
+            background: #f27d42;
             width: 150px;
             text-align: center;
             color: white;
@@ -121,7 +123,7 @@ export function EditProfile() {
 
           form input[type="submit"],
           input[type="file"] {
-            background-color: orange;
+            background-color: #f27d42;
             padding: 10px 20px;
             border-radius: 25px;
             color: white;

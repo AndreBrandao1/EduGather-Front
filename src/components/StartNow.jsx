@@ -5,6 +5,7 @@ export function StartNow({ src, firstText, secondText, href, buttonLabel }) {
   return (
     <>
       <div className="container">
+        <img src={src} />
         <div className="startLink">
           <span>{firstText}</span>
           <h2>{secondText}</h2>
@@ -12,13 +13,12 @@ export function StartNow({ src, firstText, secondText, href, buttonLabel }) {
             <button>{buttonLabel}</button>
           </Link>
         </div>
-        <img src={src} />
       </div>
       <style jsx>
         {`
           h2 {
-            font-size: 35px;
-            color: rgb(223, 170, 58);
+            font-size: 25px;
+            color: #f27d42;
             font-weight: bold;
           }
 
@@ -31,34 +31,59 @@ export function StartNow({ src, firstText, secondText, href, buttonLabel }) {
           }
           .container img {
             flex: 0 0 50%;
-            max-width: 100%;
+            max-width: 150%;
             height: auto;
             bottom: 0;
           }
           .startLink {
-            flex: 0 0 50%;
+            flex: 0 0 30%;
             display: flex;
             gap: 10px;
             flex-direction: column;
             align-self: center;
+            align-items: center;
+            text-align: center;
           }
 
           .startLink span {
-            font-size: 35px;
+            font-size: 25px;
           }
           .startLink button {
-            background-color: rgb(223, 170, 58);
-            width: 150px;
+            background-color: #f27d42;
+            width: 120px;
             color: white;
             font-weight: bold;
-            padding: 20px 30px;
+            padding: 15px 20px;
             border-radius: 25px;
-            font-size: 18px;
+            font-size: 15px;
+            margin-top: 20px;
           }
 
           @media and screen (min-width: 768px) {
             .container {
-              padding: 150px 350px;
+              padding: 150px 450px;
+            }
+
+            h2 {
+              font-size: 35px;
+            }
+
+            .container img {
+              flex: 0 0 50%;
+            }
+
+            .startLink {
+              flex: 0 0 50%;
+            }
+
+            .startLink button {
+              width: 150px;
+              padding: 20px 30px;
+              border-radius: 25px;
+              font-size: 18px;
+            }
+            .startLink span {
+              font-size: 35px;
             }
           }
         `}

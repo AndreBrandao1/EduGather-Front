@@ -43,7 +43,7 @@ export function Hero() {
           />
         </div>
         <div className="arrow">
-          <a href="#">
+          <a href="#firstStep">
             <FontAwesomeIcon icon={faChevronDown} width={50} height={50} />
           </a>
         </div>
@@ -57,6 +57,11 @@ export function Hero() {
             position: absolute;
             bottom: 0;
             animation: jumpInfinite 1.5s infinite;
+            text-decoration: none;
+          }
+
+          .arrow a:hover {
+            color: #f27d42;
           }
           .hero {
             align-items: center;
@@ -65,7 +70,7 @@ export function Hero() {
             color: white;
             display: flex;
             flex-direction: column;
-            font-size: 30px;
+            font-size: 25px;
             gap: 20px;
             height: 100vh;
             justify-content: center;
@@ -74,7 +79,7 @@ export function Hero() {
             transition: background-image 2.5s ease;
           }
           h1 {
-            font-size: 50px;
+            font-size: 30px;
             color: white;
           }
 
@@ -90,17 +95,28 @@ export function Hero() {
             display: flex;
             align-items: center;
             gap: 15px;
+            color: #f27d42;
           }
 
           @keyframes jumpInfinite {
             0% {
             }
             50% {
-              transform: translateY(-30px;);
+              transform: translateY(-20px);
             }
             100% {
-              transform: translateY(30px;);
+              transform: translateY(0);
             }
+          }
+
+          @media screen and (min-width: 992px) {
+            .hero {
+            }
+            font-size: 50px;
+          }
+
+          h1 {
+            font-size: 50px;
           }
         `}
       </style>

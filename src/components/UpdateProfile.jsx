@@ -38,7 +38,6 @@ function UpdateProfile() {
                   setEdit(!edit);
                 } else {
                   setError("Please update fields");
-                  
                 }
               }}
             >
@@ -58,7 +57,7 @@ function UpdateProfile() {
           }
 
           button {
-            background-color: purple;
+            background-color: #f27d42;
             padding: 10px 15px;
             border-radius: 25px;
             color: white;

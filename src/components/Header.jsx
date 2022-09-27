@@ -16,7 +16,13 @@ function Header() {
             <p>welcome to the your dashboard.</p>
           </div>
           <div className="profile">
-            <img src="/watermark.png" alt="profile" className="profileImage" />
+            <a href="/dashboard/profile">
+              <img
+                src="/watermark.png"
+                alt="profile"
+                className="profileImage"
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -30,11 +36,7 @@ function Header() {
             display: flex;
             flex-wrap: wrap;
             height: 70px;
-            background: linear-gradient(
-              90deg,
-              rgba(255, 134, 7, 1) 44%,
-              rgba(173, 0, 255, 1) 94%
-            );
+            background: #022444;
             padding-left: 70px;
           }
           .headWrapper {
@@ -45,6 +47,7 @@ function Header() {
 
           .title {
             margin-left: 40px;
+            font-weight: 600;
           }
           .title > h2 {
             color: rgb(0, 0, 0);
@@ -55,7 +58,7 @@ function Header() {
             color: white;
           }
           .title > h2 > span {
-            color: purple;
+            color: #f27d42;
             font-weight: bold;
           }
           .profile {

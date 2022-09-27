@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./Layouts/Button";
 import { ButtonTest } from "@/../public/styles/styledComponents";
+import { useAuth } from "@/hooks/auth";
 
 export function CourseCard({
   trainer_img,
@@ -9,7 +10,10 @@ export function CourseCard({
   course_category,
   course_tags,
   course_desc,
+  handleClick,
 }) {
+  const user = useAuth();
+  const [favourite, setFavorite] = useState(false);
   return (
     <>
       <div className="course_container">
@@ -27,8 +31,19 @@ export function CourseCard({
             <p>{course_desc}</p>
           </div>
           <div className="course_btn">
-            <ButtonTest>Details</ButtonTest>
-            <ButtonTest>Fav</ButtonTest>
+            <button onClick={handleClick} className="courseDetails">
+              <a>Details</a>
+            </button>
+            {user.user.role == "trainee" && (
+              <button
+                className="favourite"
+                onClick={(e) => {
+                  setFavorite(!favourite);
+                }}
+              >
+                <a>{favourite ? "❤️" : "🤍"}</a>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -41,14 +56,15 @@ export function CourseCard({
           /* Trainer Info*/
 
           .course_container {
-            width: auto;
-            height: auto;
+            width: 500px;
+            height: 300px;
             display: flex;
-            border: 1px solid black;
+            background-color: #98ffff;
+            border-radius: 25px;
+            padding: 25px;
           }
 
           .trainer_info {
-            border: 1px solid red;
             width: 40%;
             display: flex;
             flex-direction: column;
@@ -56,10 +72,11 @@ export function CourseCard({
             justify-content: center;
             gap: 20px;
             padding: 10px;
+            text-align: center;
           }
 
           .trainer_info img {
-            width: 80%;
+            width: 200px;
           }
 
           .trainer_info h2 {
@@ -85,9 +102,22 @@ export function CourseCard({
 
           .course_btn {
             display: flex;
-            gap: 10px;
+            gap: 20px;
+            align-self: end;
           }
-          #trainer_name {
+
+          button {
+            width: 100px;
+            padding: 20px 30px;
+            background-color: #022444;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+          }
+          @media screen and (min-width: 992px) {
+            .course_container {
+              width: 800px;
+            }
           }
         `}
       </style>

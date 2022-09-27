@@ -101,7 +101,7 @@ export function ManageResources({
             text-align: center;
           }
 
-          @media screen and (min-width: 768px) {
+          @media screen and (min-width: 992px) {
             h2 {
               font-size: 16px;
               font-weight: bold;

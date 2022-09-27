@@ -12,10 +12,26 @@ import { StartNow } from "@/components/StartNow";
 import { SponsoredTrainer } from "@/components/SponsoredTrainer";
 import { SlideShow } from "@/components/SlideShow";
 import { Nav } from "@/components/Nav";
+import { HomeSquare } from "@/components/HomeSquare";
+import { HomeSquare2 } from "@/components/HomeSquare2";
+import { HomeSquare3 } from "@/components/HomeSquare3";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  fa1,
+  faCheck,
+  faCircle,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const { user } = useAuth({ middleware: "guest" });
   const [trainers, setTrainers] = useState([]);
+  const userP = [
+    { url: "/assets/user1.png" },
+    { url: "/assets/user2.png" },
+    { url: "/assets/user3.png" },
+    { url: "/assets/user4.png" },
+  ];
 
   useEffect(() => {
     axios({
@@ -37,48 +53,69 @@ export default function Home() {
       <Hero />
       <div className="main-content">
         <section className="intro">
-          <SlideShow />
+          <HomeSquare />
+          <HomeSquare2 />
+          <HomeSquare3 />
         </section>
-        <section className="ourTrainers">
-          {trainers.slice(-5).map((t) => {
-            return (
-              <SponsoredTrainer
-                category={t.role}
-                src="assets/userPic.jpg"
-                trainerName={`${t.first_name} ${t.last_name}`}
-                key={1}
-              />
-            );
-          })}
+        <section id="firstStep" className="ourTrainers">
+          {/* We opted to not use dynamic data in this map since we were not able to implement the upload profile picture for each trainer and trainee */}
+          {/* {trainers.slice(-4).map((t) => {
+            return ( */}
+          <SponsoredTrainer
+            category="English Teacher"
+            src="assets/user1.png"
+            trainerName="Jack Velimir"
+          />
+          <SponsoredTrainer
+            category="Dance Teacher"
+            src="assets/user2.png"
+            trainerName="Viatrix Sara"
+          />
+          <SponsoredTrainer
+            category="Driving Instructor"
+            src="assets/user3.png"
+            trainerName="Erika Ronit"
+          />
+          <SponsoredTrainer
+            category="Music Teacher"
+            src="assets/user4.png"
+            trainerName="Nafiset Priti"
+          />
+          {/* );
+          })} */}
         </section>
         <section className="startNow">
           <StartNow
             buttonLabel="Start Now"
             firstText="Your can also become of of our"
             secondText="Trainers"
-            href="#"
+            href="/register"
             src="assets/startNow.png"
           />
         </section>
       </div>
       <style jsx>
         {`
-          html,
-          body {
-            overflow-x: hidden;
+          html {
+            scroll-behavior: smooth;
+          }
+          section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            padding: 50px 0px;
           }
           .container {
-            width: 100vw;
+            width: 100%;
           }
 
-          .body {
+          .intro {
             margin: 0;
-            padding: 0;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #23e3c9;
           }
 
           h2 {
@@ -89,9 +126,8 @@ export default function Home() {
 
           .ourTrainers {
             display: flex;
-            background-color: grey;
+            background-color: #c8eff9;
             width: 100%;
-            height: 600px;
             gap: 50px;
             padding: 50px 100px;
             align-items: center;
@@ -99,10 +135,20 @@ export default function Home() {
           .startNow {
             display: flex;
             background-color: white;
-            width: 100%;
-            height: 500px;
             align-items: center;
             justify-content: center;
+          }
+
+          @media screen and (min-width: 992px) {
+            section {
+              flex-direction: row;
+              height: 600px;
+            }
+            .intro {
+            }
+            h2 {
+              font-size: 35px;
+            }
           }
         `}
       </style>

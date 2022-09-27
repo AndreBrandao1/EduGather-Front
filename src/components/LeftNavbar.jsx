@@ -11,6 +11,7 @@ import {
   faAddressCard,
   faQuestion,
   faA,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
@@ -24,6 +25,16 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
         </div>
         <div className="wrapper">
           <ul>
+            {/* Home */}
+            <li>
+              <FontAwesomeIcon
+                icon={faHome}
+                style={{ width: "18px", cursor: "pointer" }}
+              />
+              <div className="link">
+                <Link href="/">Home</Link>
+              </div>
+            </li>
             {/* first link  */}
             <li>
               <FontAwesomeIcon
@@ -110,7 +121,6 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
                 </>
               )}
             </li>
-
             {/* fourth link */}
             <li>
               {user?.role == "admin" && (
@@ -152,26 +162,92 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
               )}
             </li>
             {/* fifth link */}
-            <li>
-              <FontAwesomeIcon
-                icon={faCog}
-                style={{ width: "18px", cursor: "pointer" }}
-              />
-              <div className="link">
-                <Link href="/dashboard/myCouses">Settings</Link>
-              </div>
-            </li>
-
+            {user?.role == "admin" && (
+              <>
+                <li>
+                  <FontAwesomeIcon
+                    icon={faCog}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/settings">Settings</Link>
+                  </div>
+                </li>
+              </>
+            )}
+            {user?.role == "trainee" && (
+              <>
+                <li>
+                  <FontAwesomeIcon
+                    icon={faCog}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/settings">Settings</Link>
+                  </div>
+                </li>
+              </>
+            )}
+            {user?.role == "trainer" && (
+              <>
+                <li>
+                  <FontAwesomeIcon
+                    icon={faAddressCard}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/contacts">Contacts</Link>
+                  </div>
+                </li>
+              </>
+            )}
             {/* LogOut */}
-            <li>
-              <FontAwesomeIcon
-                icon={faSignOutAlt}
-                style={{ width: "18px", cursor: "pointer" }}
-              />
-              <a onClick={logout} href="#">
-                Logout
-              </a>
-            </li>
+            {user.role == "admin" && (
+              <li>
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  style={{ width: "18px", cursor: "pointer" }}
+                />
+                <a onClick={logout} href="#">
+                  Logout
+                </a>
+              </li>
+            )}
+            {user.role == "trainee" && (
+              <li>
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  style={{ width: "18px", cursor: "pointer" }}
+                />
+                <a onClick={logout} href="#">
+                  Logout
+                </a>
+              </li>
+            )}
+            {user.role == "trainer" && (
+              <>
+                <li>
+                  <FontAwesomeIcon
+                    icon={faCog}
+                    style={{ width: "18px", cursor: "pointer" }}
+                  />
+                  <div className="link">
+                    <Link href="/dashboard/contacts">Settings</Link>
+                  </div>
+                </li>
+              </>
+            )}
+            {user.role == "trainer" && (
+              <li>
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  style={{ width: "18px", cursor: "pointer" }}
+                />
+                  <a onClick={logout} href="#">
+                    Logout
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -183,11 +259,7 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
             position: fixed;
             width: 70px;
             height: 100%;
-            background: linear-gradient(
-              180deg,
-              rgba(255, 134, 7, 1) 44%,
-              rgba(173, 0, 255, 1) 94%
-            );
+            background: #022444;
           }
 
           .wrapper {
@@ -196,7 +268,7 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
           }
 
           .logo {
-            background: url("logo.png");
+            background: url("assets/icon.png");
             width: 40px;
             height: 40px;
             padding: 10px;
@@ -220,12 +292,14 @@ function LeftNavbar({ onClick, onClick2, onClick3, onClick4, onClick5 }) {
           .link {
             white-space: nowrap;
             opacity: 0;
+            color: white;
           }
 
           .wrapper > ul > li {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            color: #f27d42;
           }
           .wrapper > ul > li:hover {
             color: purple;

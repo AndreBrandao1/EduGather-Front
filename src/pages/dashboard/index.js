@@ -9,6 +9,7 @@ import NavDashboard from "@/components/NavDashboard";
 import { TraineeDashboard } from "@/components/TraineeDashboard";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
+import { Nav } from "@/components/Nav";
 
 const DashboardIndex = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const DashboardIndex = () => {
     <>
       {user?.role == "trainer" && (
         <Dashboard>
-          <TraineeDashboard />
+          <NavDashboard />
         </Dashboard>
       )}
       {user?.role === "admin" && (

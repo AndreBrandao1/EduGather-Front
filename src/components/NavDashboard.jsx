@@ -7,22 +7,22 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/auth";
 function NavDashboard() {
   const { user } = useAuth({ middleware: "auth" });
-  const [trainer, setTrainer] = useState();
+  const [couNumber, setCouNumber] = useState();
   const loggedUser = user?.id;
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/get_users_admin/trainer/on_hold")
-      .then(function (response) {
-        // handle success
-        // setTrainer(response);
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8000/api/get_users_admin/${user.user.id}/on_hold`)
+  //     .then(function (response) {
+  //       // handle success
+  //       // setTrainer(response);
+  //       setCouNumber(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       // handle error
+  //       console.log(error);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -30,8 +30,8 @@ function NavDashboard() {
         <div className="topContent">
           <Rectangle
             redirectTo="/MyCourses"
-            first_el={trainer}
-            second_el="Trainers waiting for approval"
+            first_el={""}
+            second_el="Courses"
             bk_color="linear-gradient(90deg, rgba(245,47,0,1) 24%, rgba(235,154,58,1) 70%);"
             tabletWidth="250px"
             desktopWidth="450px"
@@ -87,6 +87,8 @@ function NavDashboard() {
           .content {
             width: auto;
             padding-left: 70px;
+            display: flex;
+            justify-content: center;
           }
 
           .topContent {
@@ -101,6 +103,8 @@ function NavDashboard() {
           @media screen and (min-width: 768px) and (max-width: 992px) {
             .content {
               display: flex;
+              justify-content: center;
+              margin-left: 200px;
             }
             .topContent {
               flex-direction: row;
@@ -109,6 +113,10 @@ function NavDashboard() {
           }
 
           @media screen and (min-width: 993px) {
+            .content {
+              padding: 100px 100px 100px;
+            }
+
             .topContent {
               flex-direction: row;
               flex-wrap: wrap;

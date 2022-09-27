@@ -72,7 +72,14 @@ export default function courseDetails() {
       </p>
       {/* The courses are available and need a map through to use the mini course presentation with a link to (((((/courses/[id]))))) */}
       {/* Css */}
-      <style jsx>{``}</style>
+      <style jsx>{`
+          .content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+        `}</style>
     </>
   );
 }
